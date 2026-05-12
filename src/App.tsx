@@ -23,7 +23,7 @@ export default function App() {
       <nav className="nav">
         <div className="nav__logo">
           <span className="mark">Hakkı Yavuz</span>
-          <span className="sub">/ photography</span>
+          <span className="sub">/ director & producer</span>
         </div>
         <div className="nav__links">
           <a href="#about">Hakkımda</a>
