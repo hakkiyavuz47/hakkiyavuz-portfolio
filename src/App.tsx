@@ -23,7 +23,7 @@ export default function App() {
       <nav className="nav">
         <a className="nav__logo" href="#" aria-label="Ana sayfaya dön">
           <span className="mark">Hakkı Yavuz</span>
-          <span className="sub">/ director & producer</span>
+          <span className="sub">/ DIRECTOR & PRODUCER</span>
         </a>
         <div className="nav__links">
           <a href="#about">Hakkımda</a>

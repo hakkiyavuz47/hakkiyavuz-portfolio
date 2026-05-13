@@ -42,8 +42,7 @@ export function Hero({ variant = "fullbleed", heroIndex = 0 }: HeroProps) {
         </div>
       )}
       <div className="hero__inner">
-        <div className="hero__eyebrow">İstanbul · Hibrit Fotoğrafçılık · 2026</div>
-        <h1 className="hero__h1">
+<h1 className="hero__h1">
           {splitChars("Gözünüzün")}{" "}
           {splitChars("Gördüğünden")}{" "}
           <em className="italiana">{splitChars("Çok Daha")}</em>{" "}

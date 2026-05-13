@@ -61,8 +61,8 @@ export const HY_DATA = {
   about: {
     portrait: "/hakki-yavuz-profile.jpeg",
     name: "Hakkı Yavuz",
-    role: "Fotoğrafçı & Görsel Yönetmen",
-    location: "İstanbul",
+    role: "Director & Producer",
+    location: "Istanbul",
     intro:
       "Yönetmen & Kreatif Producer. Görsel hikaye anlatıcılığı. Sinematik prodüksiyon. Yapay zeka destekli post-prodüksiyon.",
     body:

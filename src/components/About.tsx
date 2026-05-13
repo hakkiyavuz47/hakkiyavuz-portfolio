@@ -6,7 +6,7 @@ export function About() {
     <section className="about" id="about" data-screen-label="02 Hakkımda">
       <div className="about__inner">
         <div className="about__portrait reveal">
-          <div className="about__portrait-frame mask-reveal">
+          <div className="about__portrait-frame">
             <img src={a.portrait} alt={a.name} loading="lazy" />
           </div>
           <div className="about__sig italiana">— Hakkı Yavuz</div>
@@ -30,7 +30,7 @@ export function About() {
           </div>
           <div className="about__meta reveal">
             <span>{a.role}</span>
-            <span className="dot"></span>
+            <span className="about__meta-sep">/</span>
             <span>{a.location}</span>
           </div>
         </div>
