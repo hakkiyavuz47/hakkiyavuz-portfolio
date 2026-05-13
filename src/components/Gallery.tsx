@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HY_DATA } from "../data";
 
 type View = "categories" | "detail";
@@ -12,6 +12,14 @@ export function Gallery() {
 
   const activeLabel = categories.find((c) => c.key === activeKey)?.label ?? "";
   const detailItems = activeKey ? items.filter((i) => i.cat === activeKey) : [];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      document.querySelectorAll("#portfolio .reveal, #portfolio .mask-reveal")
+        .forEach(el => el.classList.add("is-in"));
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [view]);
 
   function openCategory(key: string) {
     setActiveKey(key);
