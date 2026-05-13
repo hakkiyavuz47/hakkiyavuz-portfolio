@@ -47,6 +47,8 @@ export type ProcessStep = {
 export type FilterDef = {
   key: string;
   label: string;
+  type?: string;
+  cover?: string;
 };
 
 export const HY_DATA = {
@@ -62,11 +64,11 @@ export const HY_DATA = {
     role: "Fotoğrafçı & Görsel Yönetmen",
     location: "İstanbul",
     intro:
-      "İstanbul merkezli fotoğrafçı ve görsel yönetmenim. Radyo Televizyon ve Sinema lisansının ardından, dört yılı aşkın süredir markalar, ajanslar ve özel projeler için kareler üretiyorum.",
+      "Yönetmen & Kreatif Producer. Görsel hikaye anlatıcılığı. Sinematik prodüksiyon. Yapay zeka destekli post-prodüksiyon.",
     body:
       "Stüdyodan sokağa, ürün masasından restoran atmosferine — her brief'i kendi sinematik bakışımla çekiyor, ardından yapay zeka destekli post-prodüksiyonla atmosferi, ışığı ve sahneyi yeniden yorumluyorum. Subjeyi asla bozmadan, hayal edileni gerçekçi kılarak.",
     stats: [
-      { k: "Yıl Deneyim", v: "6+" },
+      { k: "Yıl Deneyim", v: "8+" },
       { k: "Tamamlanan Proje", v: "120+" },
       { k: "Marka & Ajans", v: "20+" },
     ],
@@ -162,14 +164,44 @@ export const HY_DATA = {
     { cat: "mezuniyet", size: "s-md", concept: true, image: us("photo-1627556704290-2b1f5853ff78", 1400, 1050) },
     { cat: "mezuniyet", size: "s-sq", concept: true, image: us("photo-1564981797816-1043664bf78d", 1000, 1000) },
     { cat: "mezuniyet", size: "s-wide", concept: true, image: us("photo-1597392582469-a697322d5c16", 1600, 1000) },
+
+    { cat: "endustriyel", size: "s-wide", concept: true, image: us("photo-1581091226825-a6a2a5aee158", 1600, 1000) },
+    { cat: "endustriyel", size: "s-tall", concept: true, image: us("photo-1504917595217-d4dc5ebe6122", 1000, 1300) },
+    { cat: "endustriyel", size: "s-sq",   concept: true, image: us("photo-1565043589221-1a6fd9ae45c7", 1000, 1000) },
+    { cat: "endustriyel", size: "s-md",   concept: true, image: us("photo-1518770660439-4636190af475", 1400, 1050) },
+    { cat: "endustriyel", size: "s-tall", concept: true, image: us("photo-1530124566582-a618bc2615dc", 1000, 1300) },
+    { cat: "endustriyel", size: "s-sq",   concept: true, image: us("photo-1588776814546-1ffedba88a78", 1000, 1000) },
+    { cat: "endustriyel", size: "s-md",   concept: true, image: us("photo-1513828583688-c52646db42da", 1400, 1050) },
+    { cat: "endustriyel", size: "s-wide", concept: true, image: us("photo-1567789884554-0b844b597180", 1600, 1000) },
+
+    { cat: "fuar", size: "s-wide", concept: true, image: us("photo-1540575467063-178a50c2df87", 1600, 1000) },
+    { cat: "fuar", size: "s-tall", concept: true, image: us("photo-1475721027785-f74eccf877e2", 1000, 1300) },
+    { cat: "fuar", size: "s-sq",   concept: true, image: us("photo-1559223607-a43c990c692c", 1000, 1000) },
+    { cat: "fuar", size: "s-md",   concept: true, image: us("photo-1587825140708-dfaf72ae4b04", 1400, 1050) },
+    { cat: "fuar", size: "s-tall", concept: true, image: us("photo-1511578314322-379afb476865", 1000, 1300) },
+    { cat: "fuar", size: "s-sq",   concept: true, image: us("photo-1528605248644-14dd04022da1", 1000, 1000) },
+    { cat: "fuar", size: "s-md",   concept: true, image: us("photo-1460925895917-afdab827c52f", 1400, 1050) },
+    { cat: "fuar", size: "s-wide", concept: true, image: us("photo-1505373877841-8d25f7d46678", 1600, 1000) },
+
+    { cat: "medikal", size: "s-wide", concept: true, image: us("photo-1576091160399-112ba8d25d1d", 1600, 1000) },
+    { cat: "medikal", size: "s-tall", concept: true, image: us("photo-1579684385127-1ef15d508118", 1000, 1300) },
+    { cat: "medikal", size: "s-sq",   concept: true, image: us("photo-1631815588090-d4bfec5b1ccb", 1000, 1000) },
+    { cat: "medikal", size: "s-md",   concept: true, image: us("photo-1551190822-a9333d879b1f", 1400, 1050) },
+    { cat: "medikal", size: "s-tall", concept: true, image: us("photo-1559757148-5c350d0d3c56", 1000, 1300) },
+    { cat: "medikal", size: "s-sq",   concept: true, image: us("photo-1612349317150-e413f6a5b16d", 1000, 1000) },
+    { cat: "medikal", size: "s-md",   concept: true, image: us("photo-1530026405186-ed1f139313f3", 1400, 1050) },
+    { cat: "medikal", size: "s-wide", concept: true, image: us("photo-1504439468489-c8920d796a29", 1600, 1000) },
   ] as GalleryItem[],
 
   filters: [
     { key: "all", label: "Tümü" },
-    { key: "moda", label: "Moda & Portre" },
-    { key: "yemek", label: "Yemek & Restoran" },
-    { key: "dugun", label: "Düğün" },
-    { key: "mezuniyet", label: "Mezuniyet" },
+    { key: "moda",      label: "Moda & Portre",     type: "PHOTO",   cover: wix("64e9a21b2df14636b27fbbdd5430b9a5", 1400, 1050) },
+    { key: "yemek",     label: "Yemek & Restoran",  type: "PHOTO",   cover: us("photo-1546069901-ba9599a7e63c", 1400, 1050) },
+    { key: "dugun",     label: "Düğün",              type: "KONSEPT", cover: us("photo-1519741497674-611481863552", 1400, 1050) },
+    { key: "mezuniyet",   label: "Mezuniyet",          type: "KONSEPT", cover: us("photo-1523580494863-6f3031224c94", 1000, 1300) },
+    { key: "endustriyel", label: "Endüstriyel",        type: "PHOTO",   cover: us("photo-1504917595217-d4dc5ebe6122", 1400, 1050) },
+    { key: "fuar",        label: "Fuar",               type: "PHOTO",   cover: us("photo-1540575467063-178a50c2df87", 1400, 1050) },
+    { key: "medikal",     label: "Medikal",            type: "PHOTO",   cover: us("photo-1576091160399-112ba8d25d1d", 1400, 1050) },
   ] as FilterDef[],
 
   process: [

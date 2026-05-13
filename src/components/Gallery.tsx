@@ -1,64 +1,84 @@
 import { useState } from "react";
 import { HY_DATA } from "../data";
 
+type View = "categories" | "detail";
+
 export function Gallery() {
-  const [filter, setFilter] = useState("all");
+  const [view, setView] = useState<View>("categories");
+  const [activeKey, setActiveKey] = useState<string | null>(null);
+
   const items = HY_DATA.portfolio;
-  const filters = HY_DATA.filters.map((f) => ({
-    ...f,
-    count:
-      f.key === "all"
-        ? items.length
-        : items.filter((i) => i.cat === f.key).length,
-  }));
+  const categories = HY_DATA.filters.filter((f) => f.key !== "all");
+
+  const activeLabel = categories.find((c) => c.key === activeKey)?.label ?? "";
+  const detailItems = activeKey ? items.filter((i) => i.cat === activeKey) : [];
+
+  function openCategory(key: string) {
+    setActiveKey(key);
+    setView("detail");
+    window.scrollTo({ top: document.getElementById("portfolio")!.offsetTop - 80, behavior: "smooth" });
+  }
+
+  function goBack() {
+    setView("categories");
+    setActiveKey(null);
+  }
 
   return (
     <section className="gallery" id="portfolio" data-screen-label="05 Portfolyo">
       <div className="section__head">
-        <div>
+        <div className="gallery__head-inner">
           <div className="section__num reveal">— 05 / Portfolyo</div>
-          <h2 className="section__title reveal">
-            Son <em className="italiana">kareler.</em>
-          </h2>
+          {view === "categories" ? (
+            <h2 className="section__title reveal">
+              Son <em className="italiana">kareler.</em>
+            </h2>
+          ) : (
+            <div className="gallery__back-row">
+              <button className="gallery__back" onClick={goBack}>
+                ← Geri
+              </button>
+              <h2 className="section__title reveal">{activeLabel}</h2>
+            </div>
+          )}
         </div>
-        <p className="section__sub reveal">
-          Düğün ve mezuniyet kategorisindeki çalışmalar henüz konsept
-          aşamasındadır; "Konsept" rozetiyle işaretlidir. Diğer kategoriler
-          tamamlanmış projelerdir.
-        </p>
       </div>
-      <div className="gallery__filters reveal" role="tablist">
-        {filters.map((f) => (
-          <button
-            key={f.key}
-            className={`gallery__filter ${filter === f.key ? "is-active" : ""}`}
-            onClick={() => setFilter(f.key)}
-            role="tab"
-          >
-            {f.label}
-            <span className="count">{String(f.count).padStart(2, "0")}</span>
-          </button>
-        ))}
-      </div>
-      <div className="gallery__grid">
-        {items.map((it, i) => {
-          const hidden = filter !== "all" && filter !== it.cat;
-          return (
-            <a
-              href="#"
-              key={i}
-              className={`gallery__item ${it.size} ${hidden ? "is-hidden" : ""}`}
-              style={{ transitionDelay: `${(i % 8) * 40}ms` }}
+
+      {view === "categories" ? (
+        <div className="gallery__cats reveal">
+          {categories.map((cat) => (
+            <div
+              key={cat.key}
+              className="gallery__cat-card"
+              onClick={() => openCategory(cat.key)}
             >
-              <img src={it.image} alt={it.cat} loading="lazy" />
+              <div className="gallery__cat-img">
+                {cat.cover && (
+                  <img src={cat.cover} alt={cat.label} loading="lazy" />
+                )}
+                <div className="gallery__cat-overlay" />
+              </div>
+              <div className="gallery__cat-info">
+                <span className="gallery__cat-name">{cat.label.toUpperCase()}</span>
+                <span className="gallery__cat-type">{cat.type}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="gallery__detail">
+          {detailItems.map((it, i) => (
+            <div
+              key={i}
+              className={`gallery__detail-item ${it.size}`}
+              style={{ transitionDelay: `${(i % 6) * 60}ms` }}
+            >
+              <img src={it.image} alt={activeLabel} loading="lazy" />
               {it.concept && <span className="badge">Konsept</span>}
-              <span className="meta">
-                {HY_DATA.filters.find((f) => f.key === it.cat)?.label}
-              </span>
-            </a>
-          );
-        })}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

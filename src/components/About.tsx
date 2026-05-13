@@ -13,9 +13,7 @@ export function About() {
         </div>
         <div className="about__content">
           <div className="section__num reveal">— 02 / Hakkımda</div>
-          <h2 className="about__title reveal">
-            Kareleri kuran, <em className="italiana">vizyonu</em> kuran adam.
-          </h2>
+
           <p className="about__intro reveal">{a.intro}</p>
           <p className="about__body reveal">{a.body}</p>
           <div className="about__stats">

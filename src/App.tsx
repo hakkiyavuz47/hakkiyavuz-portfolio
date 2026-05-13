@@ -21,10 +21,10 @@ export default function App() {
     <>
       <Cursor />
       <nav className="nav">
-        <div className="nav__logo">
+        <a className="nav__logo" href="#" aria-label="Ana sayfaya dön">
           <span className="mark">Hakkı Yavuz</span>
           <span className="sub">/ director & producer</span>
-        </div>
+        </a>
         <div className="nav__links">
           <a href="#about">Hakkımda</a>
           <a href="#services">Hizmetler</a>

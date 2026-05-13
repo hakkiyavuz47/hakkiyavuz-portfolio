@@ -50,12 +50,7 @@ export function Hero({ variant = "fullbleed", heroIndex = 0 }: HeroProps) {
           {splitChars("Fazlası.")}
         </h1>
         <div className="hero__bottom">
-          <p className="hero__alt">
-            Geleneksel fotoğrafçılığın gerçekliğini, yapay zekanın sınırsız
-            vizyonuyla birleştiriyoruz. İster en özel gününüz, ister markanızın
-            yeni vizyonu olsun; estetik sınırları ortadan kaldıran kusursuz
-            kareler üretiyoruz.
-          </p>
+
           <div className="hero__ctas">
             <a href="#contact" className="btn btn--primary btn--lg">
               🚀 Projeyi Konuşalım <span className="arrow">→</span>
