@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hakkı Yavuz — Strateji · Tasarım · Dijital</title>
+<meta name="description" content="Gözünüzün gördüğünden çok daha fazlası. Marka, grafik tasarım, dijital pazarlama, web tasarım, sosyal medya, video prodüksiyon, fotoğraf çekim ve SEO hizmetleri.">
+<style>
+  :root {
+    --black: #111111;
+    --white: #ffffff;
+    --gray-50: #f7f7f7;
+    --gray-100: #f0f0f0;
+    --gray-200: #e0e0e0;
+    --gray-400: #aaaaaa;
+    --gray-600: #666666;
+    --green: #1D9E75;
+    --green-dark: #0F6E56;
+    --green-light: #e8f7f1;
+    --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--white); color: var(--black); -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; border-bottom: 0.5px solid var(--gray-200); background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 100; }
+  .logo { width: 38px; height: 38px; border-radius: 50%; background: var(--black); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; cursor: pointer; }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links li span { font-size: 13px; color: var(--gray-400); padding: 6px 16px; cursor: pointer; border-radius: 6px; display: block; transition: color 0.2s; font-weight: 400; }
+  .nav-links li span:hover { color: var(--black); }
+  .nav-links li.active span { color: var(--black); font-weight: 500; }
+  .nav-right { display: flex; gap: 12px; align-items: center; }
+  .nav-cta { font-size: 12px; padding: 8px 20px; border: 1px solid var(--black); border-radius: 100px; cursor: pointer; background: var(--white); color: var(--black); font-family: var(--font); transition: all 0.2s; }
+  .nav-cta:hover { background: var(--black); color: var(--white); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--black); transition: all 0.3s; }
+
+  /* PAGE SYSTEM */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero { position: relative; text-align: center; padding: 100px 48px 80px; overflow: hidden; min-height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .hero-bg svg { width: 100%; height: 100%; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.83); z-index: 1; }
+  .hero-content { position: relative; z-index: 2; }
+  .hero h1 { font-size: 64px; font-weight: 800; letter-spacing: -3.5px; line-height: 1.03; margin-bottom: 20px; color: var(--black); }
+  .hero h1 em { font-style: italic; font-weight: 300; opacity: 0.2; }
+  .hero-sub { font-size: 15px; color: var(--gray-600); line-height: 1.8; max-width: 380px; margin: 0 auto 40px; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: 100px; font-size: 13px; cursor: pointer; font-family: var(--font); transition: all 0.2s; letter-spacing: 0.2px; text-decoration: none; }
+  .btn-outline { border: 1.5px solid var(--black); background: var(--white); color: var(--black); }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .btn-wa { border: 1.5px solid var(--green); background: var(--white); color: var(--green); }
+  .btn-wa:hover { background: var(--green); color: var(--white); }
+  .btn-wa-solid { border: 1.5px solid var(--green); background: var(--green); color: var(--white); font-size: 15px; font-weight: 600; padding: 16px 36px; }
+  .btn-wa-solid:hover { background: var(--green-dark); border-color: var(--green-dark); }
+  .hero-stats { display: flex; justify-content: center; gap: 56px; margin-top: 56px; padding-top: 40px; border-top: 0.5px solid var(--gray-200); }
+  .stat-n { font-size: 36px; font-weight: 700; letter-spacing: -1.5px; color: var(--black); }
+  .stat-l { font-size: 11px; color: var(--gray-400); letter-spacing: 0.5px; margin-top: 4px; text-transform: uppercase; }
+
+  /* MASONRY */
+  .masonry-wrap { padding: 0 48px 72px; }
+  .masonry { columns: 2; gap: 14px; }
+  .m-item { break-inside: avoid; margin-bottom: 14px; border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.25s, opacity 0.25s; }
+  .m-item:hover { transform: translateY(-3px); opacity: 0.92; }
+  .m-item svg { display: block; width: 100%; }
+
+  /* SECTION HEADER */
+  .section-hdr { display: flex; justify-content: space-between; align-items: flex-end; padding: 64px 48px 32px; }
+  .section-hdr h2 { font-size: 42px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
+  .section-hdr a { font-size: 12px; color: var(--gray-400); text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; }
+  .section-hdr a:hover { color: var(--black); }
+
+  /* WORKS GRID */
+  .works-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; padding: 0 48px 72px; }
+  .wcard { cursor: pointer; }
+  .wcard-img { border-radius: 12px; overflow: hidden; margin-bottom: 12px; transition: transform 0.25s; }
+  .wcard:hover .wcard-img { transform: translateY(-2px); }
+  .wcard-img svg { display: block; width: 100%; }
+  .wcard-title { font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 3px; }
+  .wcard-cat { font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gray-400); }
+  .wcard-cat.acc { color: var(--green); }
+
+  /* SERVICES */
+  .services-intro { padding: 72px 48px 40px; max-width: 600px; }
+  .services-intro h2 { font-size: 48px; font-weight: 800; letter-spacing: -2.5px; line-height: 1.08; margin-bottom: 16px; }
+  .services-intro p { font-size: 15px; color: var(--gray-600); line-height: 1.8; }
+  .services-cats { padding: 0 48px 72px; }
+  .scat { border-top: 0.5px solid var(--gray-200); display: flex; align-items: flex-start; justify-content: space-between; padding: 28px 0; cursor: pointer; transition: padding-left 0.2s; }
+  .scat:last-child { border-bottom: 0.5px solid var(--gray-200); }
+  .scat:hover { padding-left: 8px; }
+  .scat:hover .scat-num { color: var(--green); }
+  .scat:hover .scat-arrow { color: var(--black); }
+  .scat-num { font-size: 11px; color: var(--gray-200); letter-spacing: 1px; width: 44px; flex-shrink: 0; padding-top: 4px; transition: color 0.2s; }
+  .scat-body { flex: 1; }
+  .scat-name { font-size: 24px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; }
+  .scat-subs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .sub-tag { font-size: 10px; padding: 4px 12px; border: 0.5px solid var(--gray-200); border-radius: 100px; color: var(--gray-600); letter-spacing: 0.3px; }
+  .scat-arrow { font-size: 22px; color: var(--gray-200); flex-shrink: 0; padding-top: 4px; transition: color 0.2s; }
+
+  /* ABOUT */
+  .about-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 360px; }
+  .about-left { padding: 72px 48px; background: var(--black); color: var(--white); display: flex; flex-direction: column; justify-content: flex-end; }
+  .about-left h2 { font-size: 46px; font-weight: 800; letter-spacing: -2.5px; line-height: 1.08; color: var(--white); margin-bottom: 18px; }
+  .about-left p { font-size: 14px; color: #888; line-height: 1.85; }
+  .about-right { background: var(--gray-50); display: flex; align-items: center; justify-content: center; padding: 48px; }
+  .about-right svg { width: 100%; max-width: 280px; }
+  .about-values { display: grid; grid-template-columns: repeat(3,1fr); border-top: 0.5px solid var(--gray-200); }
+  .val { padding: 40px 36px; border-right: 0.5px solid var(--gray-200); }
+  .val:last-child { border-right: none; }
+  .val-icon { font-size: 24px; color: var(--green); margin-bottom: 14px; }
+  .val-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .val-desc { font-size: 13px; color: var(--gray-600); line-height: 1.75; }
+  .about-text-section { padding: 64px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; border-top: 0.5px solid var(--gray-200); }
+  .about-text-section h3 { font-size: 28px; font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
+  .about-text-section p { font-size: 14px; color: var(--gray-600); line-height: 1.9; }
+
+  /* CONTACT WA */
+  .contact-wa { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+  .cwa-left { padding: 80px 56px; background: var(--black); display: flex; flex-direction: column; justify-content: center; }
+  .cwa-left h2 { font-size: 52px; font-weight: 800; letter-spacing: -3px; line-height: 1.06; color: var(--white); margin-bottom: 20px; }
+  .cwa-left p { font-size: 14px; color: #777; line-height: 1.85; margin-bottom: 40px; max-width: 340px; }
+  .wa-alt { font-size: 12px; color: #555; margin-top: 12px; }
+  .wa-alt a { color: var(--green); text-decoration: none; }
+  .cwa-right { padding: 80px 56px; background: var(--white); display: flex; flex-direction: column; justify-content: center; }
+  .cwa-right h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .cwa-right .sub { font-size: 13px; color: var(--gray-400); margin-bottom: 40px; line-height: 1.6; }
+  .cinfo-list { display: flex; flex-direction: column; gap: 26px; }
+  .cinfo-item { display: flex; align-items: flex-start; gap: 16px; }
+  .cinfo-ico { width: 42px; height: 42px; border-radius: 10px; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--black); flex-shrink: 0; }
+  .cinfo-ico.green { background: var(--green-light); color: var(--green); }
+  .cinfo-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
+  .cinfo-val { font-size: 14px; color: var(--black); font-weight: 500; }
+  .cinfo-desc { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+  .wa-hours { margin-top: 40px; padding-top: 28px; border-top: 0.5px solid var(--gray-200); }
+  .wa-hours-title { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 14px; }
+  .wa-hour-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--gray-600); padding: 5px 0; }
+  .wa-hour-row span:last-child { color: var(--black); font-weight: 500; }
+
+  /* CTA BLOCK */
+  .cta-block { text-align: center; padding: 100px 48px 88px; background: var(--gray-50); }
+  .cta-block h2 { font-size: 68px; font-weight: 300; letter-spacing: -4px; line-height: 1.03; margin-bottom: 32px; color: var(--black); }
+  .cta-block h2 b { font-weight: 800; }
+  .cta-block .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { border-top: 0.5px solid var(--gray-200); padding: 0 48px; background: var(--white); }
+  .footer-soc { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 0.5px solid var(--gray-200); padding: 28px 0; }
+  .fsoc { display: flex; align-items: center; justify-content: space-between; padding-right: 32px; border-right: 0.5px solid var(--gray-200); }
+  .fsoc:last-child { border-right: none; padding-right: 0; }
+  .fsoc-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .fsoc-handle { font-size: 11px; color: var(--gray-400); }
+  .fsoc-icon { width: 18px; height: 18px; color: var(--gray-200); }
+  .footer-bot { display: flex; justify-content: space-between; padding: 20px 0; }
+  .fcopy { font-size: 11px; color: var(--gray-400); }
+  .icon { width: 18px; height: 18px; display: inline-block; vertical-align: middle; }
+
+  /* ═══════════════════════════════════
+     PROJE DETAY
+  ═══════════════════════════════════ */
+  .proj-back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-400); padding: 28px 48px 0; cursor: pointer; background: none; border: none; font-family: var(--font); transition: color 0.2s; }
+  .proj-back:hover { color: var(--black); }
+  .proj-hero { padding: 32px 48px 0; }
+  .proj-hero-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .proj-cat-badge { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; background: var(--green-light); color: var(--green); font-weight: 600; }
+  .proj-year { font-size: 12px; color: var(--gray-400); }
+  .proj-hero h1 { font-size: 52px; font-weight: 800; letter-spacing: -2.5px; line-height: 1.06; margin-bottom: 16px; }
+  .proj-hero p { font-size: 15px; color: var(--gray-600); line-height: 1.8; max-width: 640px; margin-bottom: 24px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+  .proj-tag { font-size: 11px; padding: 5px 14px; border: 0.5px solid var(--gray-200); border-radius: 100px; color: var(--gray-600); }
+
+  .proj-cover { width: 100%; aspect-ratio: 16/7; border-radius: 0; overflow: hidden; }
+  .proj-cover svg { width: 100%; height: 100%; display: block; }
+
+  /* Gerçek görsel için: .proj-cover img { width:100%; height:100%; object-fit:cover; } */
+  .proj-cover-real { width: 100%; aspect-ratio: 16/7; overflow: hidden; background: var(--gray-100); }
+  .proj-cover-real img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .proj-info-row { display: grid; grid-template-columns: repeat(3,1fr); border-top: 0.5px solid var(--gray-200); border-bottom: 0.5px solid var(--gray-200); margin: 0 48px; }
+  .proj-info-item { padding: 28px 32px; border-right: 0.5px solid var(--gray-200); }
+  .proj-info-item:last-child { border-right: none; }
+  .proj-info-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 8px; }
+  .proj-info-val { font-size: 14px; font-weight: 500; color: var(--black); }
+
+  .proj-gallery { padding: 56px 48px 0; }
+  .proj-gallery-title { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 24px; }
+  .proj-gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pg-item { border-radius: 12px; overflow: hidden; background: var(--gray-100); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.2s; }
+  .pg-item:first-child { grid-column: 1 / -1; aspect-ratio: 16/8; }
+  .pg-item:hover { opacity: 0.85; }
+  .pg-item svg { width: 100%; height: 100%; display: block; }
+  /* Gerçek görsel için: .pg-item img { width:100%; height:100%; object-fit:cover; display:block; } */
+
+  .pg-video { border-radius: 12px; overflow: hidden; background: #0d0d0d; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; margin-top: 14px; }
+  .pg-play { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; position: absolute; }
+  .pg-play::after { content: '▶'; font-size: 18px; color: #fff; margin-left: 3px; }
+  .pg-video-label { position: absolute; bottom: 20px; left: 24px; font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
+
+  .proj-next { display: flex; align-items: center; justify-content: space-between; padding: 40px 48px; margin-top: 56px; border-top: 0.5px solid var(--gray-200); cursor: pointer; }
+  .proj-next:hover .proj-next-title { opacity: 0.6; }
+  .proj-next-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-400); margin-bottom: 8px; }
+  .proj-next-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; transition: opacity 0.2s; }
+  .proj-next-thumb { width: 160px; height: 100px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+  .proj-next-thumb svg { width: 100%; height: 100%; display: block; }
+
+  /* MOBILE MENU */
+  .mobile-menu { display: none; flex-direction: column; background: var(--white); padding: 16px 24px 24px; border-bottom: 0.5px solid var(--gray-200); gap: 4px; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu span { font-size: 16px; padding: 10px 0; border-bottom: 0.5px solid var(--gray-100); cursor: pointer; color: var(--gray-600); }
+  .mobile-menu span:hover { color: var(--black); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 14px 24px; }
+    .nav-links, .nav-right .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero { padding: 64px 24px 56px; min-height: auto; }
+    .hero h1 { font-size: 38px; letter-spacing: -2px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .stat-n { font-size: 28px; }
+    .masonry-wrap { padding: 0 24px 48px; }
+    .masonry { columns: 1; }
+    .section-hdr { padding: 48px 24px 24px; }
+    .section-hdr h2 { font-size: 28px; letter-spacing: -1px; }
+    .works-grid { grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 24px 48px; }
+    .services-intro { padding: 48px 24px 24px; }
+    .services-intro h2 { font-size: 32px; }
+    .services-cats { padding: 0 24px 48px; }
+    .scat-name { font-size: 18px; }
+    .about-hero { grid-template-columns: 1fr; }
+    .about-left { padding: 48px 24px; }
+    .about-left h2 { font-size: 30px; }
+    .about-right { display: none; }
+    .about-values { grid-template-columns: 1fr; }
+    .val { border-right: none; border-bottom: 0.5px solid var(--gray-200); padding: 28px 24px; }
+    .about-text-section { grid-template-columns: 1fr; gap: 32px; padding: 40px 24px; }
+    .contact-wa { grid-template-columns: 1fr; }
+    .cwa-left { padding: 56px 24px; }
+    .cwa-left h2 { font-size: 36px; }
+    .cwa-right { padding: 48px 24px; }
+    .cta-block { padding: 72px 24px 64px; }
+    .cta-block h2 { font-size: 40px; letter-spacing: -2px; }
+    footer { padding: 0 24px; }
+    .footer-soc { grid-template-columns: 1fr 1fr; }
+    .fsoc { padding: 16px 0; border-right: none; border-bottom: 0.5px solid var(--gray-200); padding-right: 0; }
+    .fsoc:nth-child(odd) { border-right: 0.5px solid var(--gray-200); padding-right: 16px; }
+    .fsoc:nth-child(3), .fsoc:nth-child(4) { border-bottom: none; }
+    .footer-bot { flex-direction: column; gap: 6px; padding: 16px 0; }
+    /* project detail mobile */
+    .proj-back { padding: 20px 24px 0; }
+    .proj-hero { padding: 24px 24px 0; }
+    .proj-hero h1 { font-size: 32px; letter-spacing: -1.5px; }
+    .proj-info-row { grid-template-columns: 1fr; margin: 0 24px; }
+    .proj-info-item { border-right: none; border-bottom: 0.5px solid var(--gray-200); padding: 20px 0; }
+    .proj-gallery { padding: 32px 24px 0; }
+    .proj-gallery-grid { grid-template-columns: 1fr; }
+    .pg-item:first-child { grid-column: 1; }
+    .proj-next { padding: 32px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+  @media (max-width: 540px) {
+    .works-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 32px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="go('home')">HY</div>
+  <ul class="nav-links">
+    <li class="active" id="nav-home"><span onclick="go('home')">Anasayfa</span></li>
+    <li id="nav-works"><span onclick="go('works')">Portfolyo</span></li>
+    <li id="nav-services"><span onclick="go('services')">Hizmetler</span></li>
+    <li id="nav-about"><span onclick="go('about')">Hakkımızda</span></li>
+    <li id="nav-contact"><span onclick="go('contact')">İletişim</span></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cta" onclick="go('contact')">Teklif Al</button>
+    <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <span onclick="go('home');toggleMenu()">Anasayfa</span>
+  <span onclick="go('works');toggleMenu()">Portfolyo</span>
+  <span onclick="go('services');toggleMenu()">Hizmetler</span>
+  <span onclick="go('about');toggleMenu()">Hakkımızda</span>
+  <span onclick="go('contact');toggleMenu()">İletişim</span>
+</div>
+
+<!-- ═══ ANASAYFA ═══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg">
+      <svg viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="600" cy="280" r="240" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.18"/>
+        <circle cx="600" cy="280" r="175" fill="none" stroke="#534AB7" stroke-width="0.8" opacity="0.12"/>
+        <circle cx="600" cy="280" r="110" fill="#1D9E75" opacity="0.04"/>
+        <circle cx="600" cy="280" r="55" fill="#534AB7" opacity="0.06"/>
+        <circle cx="180" cy="110" r="70" fill="none" stroke="#D4537E" stroke-width="0.8" opacity="0.13"/>
+        <circle cx="180" cy="110" r="38" fill="#D4537E" opacity="0.05"/>
+        <circle cx="1050" cy="420" r="90" fill="none" stroke="#EF9F27" stroke-width="0.8" opacity="0.12"/>
+        <circle cx="1050" cy="420" r="48" fill="#EF9F27" opacity="0.05"/>
+        <circle cx="100" cy="460" r="55" fill="none" stroke="#378ADD" stroke-width="0.8" opacity="0.11"/>
+        <circle cx="1100" cy="90" r="50" fill="none" stroke="#639922" stroke-width="0.8" opacity="0.11"/>
+        <circle cx="1100" cy="90" r="24" fill="#639922" opacity="0.05"/>
+        <circle cx="280" cy="420" r="7" fill="#1D9E75" opacity="0.18"/>
+        <circle cx="920" cy="120" r="6" fill="#534AB7" opacity="0.16"/>
+        <line x1="600" y1="40" x2="600" y2="154" stroke="#1D9E75" stroke-width="0.5" opacity="0.1"/>
+        <line x1="808" y1="150" x2="720" y2="210" stroke="#534AB7" stroke-width="0.5" opacity="0.1"/>
+        <line x1="600" y1="520" x2="600" y2="406" stroke="#534AB7" stroke-width="0.5" opacity="0.1"/>
+        <text x="60" y="210" font-size="160" font-family="Helvetica Neue,sans-serif" font-weight="900" fill="#111" opacity="0.022" letter-spacing="-6">MARKA</text>
+        <text x="40" y="420" font-size="160" font-family="Helvetica Neue,sans-serif" font-weight="900" fill="#111" opacity="0.022" letter-spacing="-6">DİJİTAL</text>
+      </svg>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Gözünüzün<br>Gördüğünden<br><em>çok</em> Daha<br>Fazlası.</h1>
+      <p class="hero-sub">Strateji, tasarım ve dijital uzmanlıkla markanızı bir üst seviyeye taşıyoruz.</p>
+      <div class="hero-btns">
+        <button class="btn btn-outline" onclick="go('works')">Portfolyoyu İncele →</button>
+        <button class="btn btn-wa" onclick="go('contact')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> WhatsApp'tan Yaz</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-n">150+</div><div class="stat-l">Proje</div></div>
+        <div><div class="stat-n">8</div><div class="stat-l">Kategori</div></div>
+        <div><div class="stat-n">10+</div><div class="stat-l">Yıl</div></div>
+        <div><div class="stat-n">60+</div><div class="stat-l">Marka</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="masonry-wrap">
+    <div class="masonry">
+      <div class="m-item" onclick="openProject('stella')"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#1a1a2e"/><circle cx="160" cy="88" r="52" fill="none" stroke="#7F77DD" stroke-width="1.5"/><circle cx="160" cy="88" r="36" fill="#534AB7" opacity="0.5"/><circle cx="160" cy="88" r="18" fill="#AFA9EC"/><text x="160" y="172" text-anchor="middle" fill="#AFA9EC" font-size="10" font-family="sans-serif" letter-spacing="2">MARKA &amp; KREATİF</text><text x="160" y="190" text-anchor="middle" fill="#7F77DD" font-size="9" font-family="sans-serif">Konsept · Konumlandırma · Analiz</text></svg></div>
+      <div class="m-item" onclick="openProject('forma')"><svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="300" fill="#071a10"/><rect x="30" y="30" width="110" height="110" rx="10" fill="#1D9E75" opacity="0.15"/><rect x="48" y="48" width="74" height="74" rx="7" fill="#1D9E75" opacity="0.4"/><rect x="65" y="65" width="40" height="40" rx="5" fill="#5DCAA5"/><rect x="158" y="30" width="132" height="52" rx="8" fill="#0F6E56"/><rect x="158" y="92" width="132" height="52" rx="8" fill="#1D9E75" opacity="0.55"/><rect x="158" y="154" width="80" height="52" rx="8" fill="#5DCAA5" opacity="0.45"/><text x="160" y="230" text-anchor="middle" fill="#5DCAA5" font-size="10" font-family="sans-serif" letter-spacing="2">GRAFİK TASARIM</text><text x="160" y="248" text-anchor="middle" fill="#1D9E75" font-size="9" font-family="sans-serif">Logo · Kimlik · Reklam · Ambalaj</text></svg></div>
+      <div class="m-item" onclick="openProject('vivo')"><svg viewBox="0 0 320 190" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="190" fill="#160820"/><ellipse cx="90" cy="88" rx="60" ry="58" fill="#D4537E" opacity="0.12"/><ellipse cx="160" cy="88" rx="60" ry="58" fill="#993556" opacity="0.12"/><ellipse cx="230" cy="88" rx="60" ry="58" fill="#ED93B1" opacity="0.12"/><ellipse cx="90" cy="88" rx="38" ry="36" fill="#D4537E" opacity="0.38"/><ellipse cx="160" cy="88" rx="38" ry="36" fill="#993556" opacity="0.38"/><ellipse cx="230" cy="88" rx="38" ry="36" fill="#ED93B1" opacity="0.32"/><text x="160" y="152" text-anchor="middle" fill="#ED93B1" font-size="10" font-family="sans-serif" letter-spacing="2">DİJİTAL PAZARLAMA</text><text x="160" y="169" text-anchor="middle" fill="#D4537E" font-size="9" font-family="sans-serif">Strateji · Reklam · E-Bülten · İçerik</text></svg></div>
+      <div class="m-item" onclick="openProject('orion')"><svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="260" fill="#080d12"/><rect x="24" y="24" width="272" height="168" rx="10" fill="#111820" stroke="#1e2730" stroke-width="1"/><rect x="38" y="38" width="244" height="14" rx="4" fill="#1a2230"/><circle cx="50" cy="45" r="4" fill="#ff5f57"/><circle cx="63" cy="45" r="4" fill="#febc2e"/><circle cx="76" cy="45" r="4" fill="#28c840"/><rect x="38" y="62" width="130" height="8" rx="2" fill="#378ADD" opacity="0.7"/><rect x="38" y="78" width="88" height="6" rx="2" fill="#5DCAA5" opacity="0.5"/><rect x="38" y="92" width="168" height="6" rx="2" fill="#7F77DD" opacity="0.5"/><rect x="38" y="152" width="88" height="24" rx="5" fill="#378ADD"/><text x="82" y="167" text-anchor="middle" fill="#fff" font-size="9" font-family="sans-serif">Teklif Al →</text><text x="160" y="216" text-anchor="middle" fill="#85B7EB" font-size="10" font-family="sans-serif" letter-spacing="2">WEB TASARIM</text></svg></div>
+      <div class="m-item" onclick="openProject('nexus')"><svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="240" fill="#07061a"/><rect x="24" y="38" width="52" height="88" rx="6" fill="#534AB7" opacity="0.28"/><rect x="24" y="60" width="52" height="66" rx="6" fill="#7F77DD" opacity="0.55"/><rect x="88" y="24" width="52" height="102" rx="6" fill="#534AB7" opacity="0.28"/><rect x="88" y="38" width="52" height="88" rx="6" fill="#7F77DD" opacity="0.5"/><rect x="152" y="44" width="52" height="82" rx="6" fill="#534AB7" opacity="0.35"/><rect x="152" y="56" width="52" height="70" rx="6" fill="#AFA9EC" opacity="0.65"/><rect x="216" y="30" width="52" height="96" rx="6" fill="#534AB7" opacity="0.28"/><rect x="216" y="42" width="52" height="84" rx="6" fill="#7F77DD" opacity="0.55"/><text x="160" y="162" text-anchor="middle" fill="#AFA9EC" font-size="10" font-family="sans-serif" letter-spacing="2">SOSYAL MEDYA</text></svg></div>
+      <div class="m-item" onclick="openProject('reel')"><svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="210" fill="#060f06"/><polygon points="60,136 160,36 260,136" fill="none" stroke="#639922" stroke-width="1.5" opacity="0.38"/><polygon points="88,136 160,62 232,136" fill="#3B6D11" opacity="0.18"/><circle cx="160" cy="76" r="20" fill="#639922" opacity="0.85"/><rect x="149" y="65" width="22" height="3" rx="1" fill="#fff"/><rect x="149" y="71" width="22" height="3" rx="1" fill="#fff"/><rect x="155" y="77" width="8" height="12" fill="#fff"/><text x="160" y="160" text-anchor="middle" fill="#97C459" font-size="10" font-family="sans-serif" letter-spacing="2">VİDEO &amp; PRODÜKSIYON</text></svg></div>
+      <div class="m-item" onclick="openProject('lux')"><svg viewBox="0 0 320 250" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="250" fill="#130c04"/><rect x="32" y="28" width="120" height="140" rx="10" fill="#854F0B" opacity="0.22"/><rect x="44" y="40" width="96" height="116" rx="7" fill="#BA7517" opacity="0.28"/><circle cx="92" cy="90" r="32" fill="#EF9F27" opacity="0.45"/><circle cx="92" cy="90" r="18" fill="#FAC775" opacity="0.8"/><circle cx="92" cy="90" r="7" fill="#fff" opacity="0.9"/><circle cx="92" cy="90" r="2.5" fill="#854F0B"/><text x="160" y="185" text-anchor="middle" fill="#FAC775" font-size="10" font-family="sans-serif" letter-spacing="2">FOTOĞRAF ÇEKİM</text></svg></div>
+      <div class="m-item" onclick="openProject('apex')"><svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="200" fill="#04101e"/><rect x="28" y="48" width="44" height="82" rx="5" fill="#378ADD" opacity="0.55"/><rect x="82" y="36" width="44" height="94" rx="5" fill="#85B7EB" opacity="0.65"/><rect x="136" y="26" width="44" height="104" rx="5" fill="#85B7EB" opacity="0.68"/><rect x="190" y="42" width="44" height="88" rx="5" fill="#378ADD" opacity="0.5"/><rect x="244" y="32" width="44" height="98" rx="5" fill="#85B7EB" opacity="0.6"/><line x1="20" y1="136" x2="300" y2="136" stroke="#378ADD" stroke-width="0.5" opacity="0.28"/><text x="160" y="156" text-anchor="middle" fill="#85B7EB" font-size="10" font-family="sans-serif" letter-spacing="2">SEO &amp; SEM</text></svg></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Bir Projeniz<br><b>Var Mı?</b></h2>
+    <div class="btns">
+      <button class="btn btn-outline" onclick="go('works')">Portfolyoyu İncele →</button>
+      <button class="btn btn-wa" onclick="go('contact')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> WhatsApp'tan Yaz</button>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-soc">
+      <div class="fsoc"><div><div class="fsoc-name">Instagram</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">LinkedIn</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-5c0-1.1.9-2 2-2s2 .9 2 2v5"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">YouTube</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">Behance</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8a4 4 0 010 8H2V6z"/><path d="M2 14h9a4 4 0 010 8H2v-8z"/><line x1="14" y1="9" x2="22" y2="9"/><path d="M14 14h8a4 4 0 01-8 0z"/></svg></div>
+    </div>
+    <div class="footer-bot"><span class="fcopy">©2025 Hakkı Yavuz. Tüm Hakları Saklıdır.</span><span class="fcopy">Strateji · Tasarım · Dijital</span></div>
+  </footer>
+</div>
+
+<!-- ═══ PORTFOLYO ═══ -->
+<div class="page" id="page-works">
+  <div class="section-hdr"><h2>Seçili<br>Çalışmalar</h2><a onclick="go('contact')">Teklif Al →</a></div>
+  <div class="works-grid">
+    <div class="wcard" onclick="openProject('stella')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#1a1a2e"/><circle cx="160" cy="110" r="52" fill="none" stroke="#7F77DD" stroke-width="1.5"/><circle cx="160" cy="110" r="34" fill="#534AB7" opacity="0.5"/><circle cx="160" cy="110" r="16" fill="#AFA9EC"/></svg></div><div class="wcard-title">Stella Marka</div><div class="wcard-cat acc">Marka Kimliği</div></div>
+    <div class="wcard" onclick="openProject('forma')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#071a10"/><rect x="40" y="40" width="100" height="100" rx="8" fill="#1D9E75" opacity="0.3"/><rect x="56" y="56" width="68" height="68" rx="5" fill="#5DCAA5" opacity="0.6"/><rect x="165" y="40" width="115" height="48" rx="6" fill="#0F6E56"/><rect x="165" y="98" width="115" height="48" rx="6" fill="#1D9E75" opacity="0.5"/></svg></div><div class="wcard-title">Forma Ajans</div><div class="wcard-cat">Grafik Tasarım</div></div>
+    <div class="wcard" onclick="openProject('nexus')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#07061a"/><rect x="20" y="30" width="48" height="90" rx="5" fill="#7F77DD" opacity="0.5"/><rect x="80" y="18" width="48" height="102" rx="5" fill="#AFA9EC" opacity="0.6"/><rect x="140" y="38" width="48" height="82" rx="5" fill="#534AB7" opacity="0.55"/><rect x="200" y="22" width="48" height="98" rx="5" fill="#7F77DD" opacity="0.5"/><rect x="260" y="32" width="40" height="88" rx="5" fill="#AFA9EC" opacity="0.45"/></svg></div><div class="wcard-title">Nexus Digital</div><div class="wcard-cat acc">Sosyal Medya</div></div>
+    <div class="wcard" onclick="openProject('orion')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#080d12"/><rect x="20" y="20" width="280" height="160" rx="10" fill="#111820" stroke="#1e2730" stroke-width="1"/><rect x="34" y="34" width="252" height="12" rx="3" fill="#1a2230"/><rect x="34" y="56" width="140" height="7" rx="2" fill="#378ADD" opacity="0.7"/><rect x="34" y="140" width="88" height="22" rx="4" fill="#378ADD"/></svg></div><div class="wcard-title">Orion E-Ticaret</div><div class="wcard-cat">Web Tasarım</div></div>
+    <div class="wcard" onclick="openProject('reel')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#060f06"/><polygon points="60,160 160,40 260,160" fill="none" stroke="#639922" stroke-width="1.5" opacity="0.4"/><circle cx="160" cy="90" r="22" fill="#639922" opacity="0.8"/><rect x="149" y="79" width="22" height="3" rx="1" fill="#fff"/><rect x="149" y="85" width="22" height="3" rx="1" fill="#fff"/><rect x="155" y="90" width="10" height="14" fill="#fff"/></svg></div><div class="wcard-title">Reel Prodüksiyon</div><div class="wcard-cat acc">Video &amp; Prodüksiyon</div></div>
+    <div class="wcard" onclick="openProject('apex')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#04101e"/><rect x="24" y="44" width="44" height="88" rx="4" fill="#378ADD" opacity="0.55"/><rect x="80" y="30" width="44" height="102" rx="4" fill="#85B7EB" opacity="0.65"/><rect x="136" y="20" width="44" height="112" rx="4" fill="#378ADD" opacity="0.5"/><rect x="248" y="26" width="44" height="106" rx="4" fill="#378ADD" opacity="0.6"/><line x1="16" y1="140" x2="304" y2="140" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/></svg></div><div class="wcard-title">Apex SEO</div><div class="wcard-cat">SEO &amp; SEM</div></div>
+    <div class="wcard" onclick="openProject('lux')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#130c04"/><circle cx="120" cy="100" r="36" fill="#EF9F27" opacity="0.4"/><circle cx="120" cy="100" r="20" fill="#FAC775" opacity="0.8"/><circle cx="120" cy="100" r="7" fill="#fff" opacity="0.9"/><rect x="172" y="40" width="120" height="60" rx="8" fill="#BA7517" opacity="0.28"/></svg></div><div class="wcard-title">Lux Moda Çekim</div><div class="wcard-cat acc">Fotoğraf Çekim</div></div>
+    <div class="wcard" onclick="openProject('vivo')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#160820"/><ellipse cx="90" cy="110" rx="58" ry="56" fill="#D4537E" opacity="0.14"/><ellipse cx="160" cy="110" rx="58" ry="56" fill="#993556" opacity="0.14"/><ellipse cx="230" cy="110" rx="58" ry="56" fill="#ED93B1" opacity="0.14"/><ellipse cx="90" cy="110" rx="36" ry="34" fill="#D4537E" opacity="0.38"/><ellipse cx="160" cy="110" rx="36" ry="34" fill="#993556" opacity="0.38"/><ellipse cx="230" cy="110" rx="36" ry="34" fill="#ED93B1" opacity="0.32"/></svg></div><div class="wcard-title">Vivo Dijital</div><div class="wcard-cat">Dijital Pazarlama</div></div>
+    <div class="wcard" onclick="openProject('forma')"><div class="wcard-img"><svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="220" fill="#071a10"/><rect x="30" y="30" width="260" height="160" rx="10" fill="#0a2a18"/><rect x="46" y="46" width="80" height="80" rx="6" fill="#1D9E75" opacity="0.25"/><rect x="58" y="58" width="56" height="56" rx="4" fill="#5DCAA5" opacity="0.5"/><rect x="142" y="46" width="132" height="36" rx="5" fill="#0F6E56"/></svg></div><div class="wcard-title">Kurum Kimlik Seti</div><div class="wcard-cat acc">Grafik Tasarım</div></div>
+  </div>
+  <div class="cta-block">
+    <h2>Sıradaki<br><b>Proje Sizin.</b></h2>
+    <div class="btns"><button class="btn btn-wa" onclick="go('contact')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> WhatsApp'tan Yaz</button></div>
+  </div>
+  <footer>
+    <div class="footer-soc">
+      <div class="fsoc"><div><div class="fsoc-name">Instagram</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">LinkedIn</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-5c0-1.1.9-2 2-2s2 .9 2 2v5"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">YouTube</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">Behance</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8a4 4 0 010 8H2V6z"/><path d="M2 14h9a4 4 0 010 8H2v-8z"/><line x1="14" y1="9" x2="22" y2="9"/><path d="M14 14h8a4 4 0 01-8 0z"/></svg></div>
+    </div>
+    <div class="footer-bot"><span class="fcopy">©2025 Hakkı Yavuz. Tüm Hakları Saklıdır.</span><span class="fcopy">Strateji · Tasarım · Dijital</span></div>
+  </footer>
+</div>
+
+<!-- ═══ PROJE DETAY ═══ -->
+<div class="page" id="page-project">
+  <button class="proj-back" id="proj-back-btn">← Portfolyoya Dön</button>
+  <div class="proj-hero">
+    <div class="proj-hero-meta">
+      <span class="proj-cat-badge" id="proj-cat">Marka Kimliği</span>
+      <span class="proj-year" id="proj-year">2024</span>
+    </div>
+    <h1 id="proj-title">Proje Adı</h1>
+    <p id="proj-desc">Proje açıklaması buraya gelecek.</p>
+    <div class="proj-tags" id="proj-tags"></div>
+  </div>
+
+  <!-- Kapak görseli — SVG placeholder (gerçek foto için img etiketi kullanın) -->
+  <div class="proj-cover" id="proj-cover">
+    <!-- openProject() fonksiyonu bu alanı dinamik dolduruyor -->
+  </div>
+
+  <div class="proj-info-row">
+    <div class="proj-info-item"><div class="proj-info-label">Müşteri</div><div class="proj-info-val" id="proj-client">—</div></div>
+    <div class="proj-info-item"><div class="proj-info-label">Hizmetler</div><div class="proj-info-val" id="proj-services">—</div></div>
+    <div class="proj-info-item"><div class="proj-info-label">Yıl</div><div class="proj-info-val" id="proj-year2">—</div></div>
+  </div>
+
+  <div class="proj-gallery">
+    <div class="proj-gallery-title">Proje Görselleri</div>
+    <div class="proj-gallery-grid" id="proj-gallery-grid">
+      <!-- openProject() tarafından doldurulur -->
+    </div>
+    <!-- Video alanı — sadece video projelerinde gösterilir -->
+    <div class="pg-video" id="proj-video" style="display:none">
+      <div class="pg-play"></div>
+      <div class="pg-video-label" id="proj-video-label">Tanıtım Videosu</div>
+    </div>
+  </div>
+
+  <div style="padding: 56px 48px 0;">
+    <div class="cta-block" style="border-radius:16px;">
+      <h2 style="font-size:44px;">Bu Projeyi<br><b>Beğendiniz mi?</b></h2>
+      <div class="btns">
+        <button class="btn btn-outline" onclick="go('works')">Tüm Projeler →</button>
+        <button class="btn btn-wa" onclick="go('contact')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> Benzer Proje İstiyorum</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="proj-next" id="proj-next-btn">
+    <div>
+      <div class="proj-next-label">Sonraki Proje</div>
+      <div class="proj-next-title" id="proj-next-title">—</div>
+    </div>
+    <div class="proj-next-thumb" id="proj-next-thumb"></div>
+  </div>
+
+  <footer style="margin-top:0;">
+    <div class="footer-soc">
+      <div class="fsoc"><div><div class="fsoc-name">Instagram</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">LinkedIn</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-5c0-1.1.9-2 2-2s2 .9 2 2v5"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">YouTube</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></div>
+      <div class="fsoc"><div><div class="fsoc-name">Behance</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8a4 4 0 010 8H2V6z"/><path d="M2 14h9a4 4 0 010 8H2v-8z"/><line x1="14" y1="9" x2="22" y2="9"/><path d="M14 14h8a4 4 0 01-8 0z"/></svg></div>
+    </div>
+    <div class="footer-bot"><span class="fcopy">©2025 Hakkı Yavuz. Tüm Hakları Saklıdır.</span><span class="fcopy">Strateji · Tasarım · Dijital</span></div>
+  </footer>
+</div>
+
+<!-- ═══ HİZMETLER ═══ -->
+<div class="page" id="page-services">
+  <div class="services-intro"><h2>Ne Yapıyoruz?</h2><p>Markanızın ihtiyaç duyduğu her alanda uçtan uca çözüm sunuyoruz. Stratejiden üretime, tasarımdan dijitale tam kapsamlı hizmet.</p></div>
+  <div class="services-cats">
+    <div class="scat"><div class="scat-num">01</div><div class="scat-body"><div class="scat-name">Marka &amp; Kreatif</div><div class="scat-subs"><span class="sub-tag">Konsept &amp; Fikir</span><span class="sub-tag">Marka Konumlandırma</span><span class="sub-tag">Marka Analizi</span><span class="sub-tag">İsim Çalışması</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">02</div><div class="scat-body"><div class="scat-name">Grafik Tasarım</div><div class="scat-subs"><span class="sub-tag">Kurumsal Kimlik</span><span class="sub-tag">Logo Tasarımı</span><span class="sub-tag">Reklam Tasarımı</span><span class="sub-tag">Katalog &amp; Broşür</span><span class="sub-tag">Banner</span><span class="sub-tag">Ambalaj</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">03</div><div class="scat-body"><div class="scat-name">Dijital Pazarlama</div><div class="scat-subs"><span class="sub-tag">Dijital Strateji</span><span class="sub-tag">Reklam Yönetimi</span><span class="sub-tag">Mailing &amp; E-Bülten</span><span class="sub-tag">İçerik Pazarlaması</span><span class="sub-tag">Kampanya</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">04</div><div class="scat-body"><div class="scat-name">Web Tasarım</div><div class="scat-subs"><span class="sub-tag">SEO Uyumlu Web</span><span class="sub-tag">E-Ticaret</span><span class="sub-tag">Landing Page</span><span class="sub-tag">Mobil Web</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">05</div><div class="scat-body"><div class="scat-name">Sosyal Medya</div><div class="scat-subs"><span class="sub-tag">Sosyal Medya Yönetimi</span><span class="sub-tag">İçerik Üretimi</span><span class="sub-tag">Facebook &amp; Instagram</span><span class="sub-tag">LinkedIn</span><span class="sub-tag">Influencer</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">06</div><div class="scat-body"><div class="scat-name">Video &amp; Prodüksiyon</div><div class="scat-subs"><span class="sub-tag">Reklam Filmi</span><span class="sub-tag">Tanıtım Videosu</span><span class="sub-tag">Animasyon</span><span class="sub-tag">Reels &amp; Shorts</span><span class="sub-tag">Drone</span><span class="sub-tag">Video Kurgu</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">07</div><div class="scat-body"><div class="scat-name">Fotoğraf Çekim</div><div class="scat-subs"><span class="sub-tag">Ürün Fotoğrafı</span><span class="sub-tag">Modelli Çekim</span><span class="sub-tag">Mimari &amp; Mekan</span><span class="sub-tag">E-Ticaret</span><span class="sub-tag">Yemek &amp; Menü</span><span class="sub-tag">Endüstriyel</span></div></div><div class="scat-arrow">↗</div></div>
+    <div class="scat"><div class="scat-num">08</div><div class="scat-body"><div class="scat-name">SEO &amp; SEM</div><div class="scat-subs"><span class="sub-tag">SEO Danışmanlığı</span><span class="sub-tag">Google Ads</span><span class="sub-tag">Dönüşüm Opt.</span><span class="sub-tag">Mobil Reklam</span></div></div><div class="scat-arrow">↗</div></div>
+  </div>
+  <div class="cta-block"><h2>Hangi Hizmet<br><b>Lazım?</b></h2><div class="btns"><button class="btn btn-wa" onclick="go('contact')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> Hemen Sorun</button></div></div>
+  <footer><div class="footer-soc"><div class="fsoc"><div><div class="fsoc-name">Instagram</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div><div class="fsoc"><div><div class="fsoc-name">LinkedIn</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-5c0-1.1.9-2 2-2s2 .9 2 2v5"/></svg></div><div class="fsoc"><div><div class="fsoc-name">YouTube</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></div><div class="fsoc"><div><div class="fsoc-name">Behance</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8a4 4 0 010 8H2V6z"/><path d="M2 14h9a4 4 0 010 8H2v-8z"/><line x1="14" y1="9" x2="22" y2="9"/><path d="M14 14h8a4 4 0 01-8 0z"/></svg></div></div><div class="footer-bot"><span class="fcopy">©2025 Hakkı Yavuz. Tüm Hakları Saklıdır.</span><span class="fcopy">Strateji · Tasarım · Dijital</span></div></footer>
+</div>
+
+<!-- ═══ HAKKIMIZDA ═══ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="about-left"><h2>Markaları Daha Güçlü Yapıyoruz.</h2><p>Hakkı Yavuz olarak strateji, tasarım ve dijital disiplinleri bir arada kullanarak markalara kalıcı bir etki bırakıyoruz.</p></div>
+    <div class="about-right"><svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><circle cx="140" cy="140" r="96" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.28"/><circle cx="140" cy="140" r="68" fill="none" stroke="#1D9E75" stroke-width="1" opacity="0.38"/><circle cx="140" cy="140" r="40" fill="#1D9E75" opacity="0.12"/><circle cx="140" cy="140" r="20" fill="#1D9E75" opacity="0.7"/><text x="140" y="145" text-anchor="middle" fill="#fff" font-size="12" font-family="Helvetica Neue,sans-serif" font-weight="700">HY</text><circle cx="140" cy="46" r="8" fill="#1D9E75" opacity="0.55"/><circle cx="224" cy="93" r="6" fill="#5DCAA5" opacity="0.5"/><circle cx="232" cy="183" r="8" fill="#1D9E75" opacity="0.4"/><circle cx="140" cy="234" r="6" fill="#5DCAA5" opacity="0.5"/><circle cx="48" cy="183" r="8" fill="#1D9E75" opacity="0.4"/><circle cx="56" cy="93" r="6" fill="#5DCAA5" opacity="0.5"/></svg></div>
+  </div>
+  <div class="about-values">
+    <div class="val"><div class="val-icon">◎</div><div class="val-title">Vizyon</div><div class="val-desc">Her markayı gördüğünden çok daha büyük bir etki yaratabilecek şekilde konumlandırıyoruz.</div></div>
+    <div class="val"><div class="val-icon">◈</div><div class="val-title">Yaratıcılık</div><div class="val-desc">Sıradan işler yapmıyoruz. Her projede özgün, dikkat çeken ve akılda kalan işler üretiyoruz.</div></div>
+    <div class="val"><div class="val-icon">◆</div><div class="val-title">Sonuç</div><div class="val-desc">Güzel görünen ama sonuç vermeyen işlere inanmıyoruz. Her çalışma ölçülebilir hedeflere bağlı.</div></div>
+  </div>
+  <div class="about-text-section">
+    <div><h3>Kimiz?</h3><p>Hakkı Yavuz, 10 yılı aşkın deneyimiyle Türkiye'nin önde gelen marka ve dijital ajanslarından biridir. Marka kimliğinden web tasarıma, sosyal medyadan video prodüksiyona kadar geniş bir yelpazede hizmet veriyoruz.</p></div>
+    <div><h3>Nasıl Çalışıyoruz?</h3><p>Her projeye önce dinleyerek başlıyoruz. Markanızı, hedef kitlenizi ve pazarı derinlemesine anlıyoruz. Ardından strateji, tasarım ve üretim süreçlerini entegre biçimde yürütüyoruz.</p></div>
+  </div>
+  <div class="cta-block"><h2>Birlikte<br><b>Büyüyelim.</b></h2><div class="btns"><button class="btn btn-wa" onclick="go('contact')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> İletişime Geç</button></div></div>
+  <footer><div class="footer-soc"><div class="fsoc"><div><div class="fsoc-name">Instagram</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div><div class="fsoc"><div><div class="fsoc-name">LinkedIn</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-5c0-1.1.9-2 2-2s2 .9 2 2v5"/></svg></div><div class="fsoc"><div><div class="fsoc-name">YouTube</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></div><div class="fsoc"><div><div class="fsoc-name">Behance</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8a4 4 0 010 8H2V6z"/><path d="M2 14h9a4 4 0 010 8H2v-8z"/><line x1="14" y1="9" x2="22" y2="9"/><path d="M14 14h8a4 4 0 01-8 0z"/></svg></div></div><div class="footer-bot"><span class="fcopy">©2025 Hakkı Yavuz. Tüm Hakları Saklıdır.</span><span class="fcopy">Strateji · Tasarım · Dijital</span></div></footer>
+</div>
+
+<!-- ═══ İLETİŞİM ═══ -->
+<div class="page" id="page-contact">
+  <div class="contact-wa">
+    <div class="cwa-left">
+      <h2>Konuşalım.</h2>
+      <p>Projenizi anlatın, size özel çözümler üretelim. En hızlı yanıt için WhatsApp üzerinden ulaşabilirsiniz.</p>
+      <!-- WhatsApp numaranızı buraya yazın: wa.me/905XXXXXXXXX -->
+      <a class="btn btn-wa-solid" href="https://wa.me/905XXXXXXXXX?text=Merhaba,%20proje%20g%C3%B6r%C3%BC%C5%9Fmesi%20yapmak%20istiyorum." target="_blank"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> WhatsApp'tan Yaz</a>
+      <div class="wa-alt">Ya da <a href="mailto:info@hakkiyavuz.com">info@hakkiyavuz.com</a> adresine mail gönderin</div>
+    </div>
+    <div class="cwa-right">
+      <h3>İletişim Bilgileri</h3>
+      <p class="sub">Aşağıdaki kanallardan bize ulaşabilirsiniz.</p>
+      <div class="cinfo-list">
+        <div class="cinfo-item"><div class="cinfo-ico green"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div><div><div class="cinfo-label">WhatsApp</div><div class="cinfo-val">+90 (5XX) XXX XX XX</div><div class="cinfo-desc">Hızlı yanıt · Proje görüşmesi</div></div></div>
+        <div class="cinfo-item"><div class="cinfo-ico"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cinfo-label">E-posta</div><div class="cinfo-val">info@hakkiyavuz.com</div><div class="cinfo-desc">Detaylı teklif talebi için</div></div></div>
+        <div class="cinfo-item"><div class="cinfo-ico"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div><div><div class="cinfo-label">Instagram</div><div class="cinfo-val">@hakkiyavuz</div><div class="cinfo-desc">Portfolyo · DM ile ulaşın</div></div></div>
+        <div class="cinfo-item"><div class="cinfo-ico"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cinfo-label">Konum</div><div class="cinfo-val">İstanbul, Türkiye</div><div class="cinfo-desc">Yüz yüze görüşme için randevu alın</div></div></div>
+      </div>
+      <div class="wa-hours">
+        <div class="wa-hours-title">Çalışma Saatleri</div>
+        <div class="wa-hour-row"><span>Pazartesi – Cuma</span><span>09:00 – 18:00</span></div>
+        <div class="wa-hour-row"><span>Cumartesi</span><span>10:00 – 14:00</span></div>
+        <div class="wa-hour-row"><span>Pazar</span><span>Kapalı</span></div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="footer-soc"><div class="fsoc"><div><div class="fsoc-name">Instagram</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div><div class="fsoc"><div><div class="fsoc-name">LinkedIn</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-5c0-1.1.9-2 2-2s2 .9 2 2v5"/></svg></div><div class="fsoc"><div><div class="fsoc-name">YouTube</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></div><div class="fsoc"><div><div class="fsoc-name">Behance</div><div class="fsoc-handle">@hakkiyavuz</div></div><svg class="fsoc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8a4 4 0 010 8H2V6z"/><path d="M2 14h9a4 4 0 010 8H2v-8z"/><line x1="14" y1="9" x2="22" y2="9"/><path d="M14 14h8a4 4 0 01-8 0z"/></svg></div></div><div class="footer-bot"><span class="fcopy">©2025 Hakkı Yavuz. Tüm Hakları Saklıdır.</span><span class="fcopy">Strateji · Tasarım · Dijital</span></div></footer>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// PROJE VERİTABANI
+// Gerçek projelerinizi buraya ekleyin.
+// cover: SVG kodu VEYA '<img src="foto.jpg">' yazabilirsiniz.
+// gallery: her öğe { type:'img'|'svg', src } formatında
+// video: true ise video alanı gösterilir
+// ════════════════════════════════════════
+const PROJECTS = {
+  stella: {
+    title: 'Stella Marka',
+    cat: 'Marka Kimliği',
+    year: '2024',
+    client: 'Stella Kozmetik',
+    services: 'Marka Kimliği · Logo · Konumlandırma',
+    desc: 'Stella Kozmetik için uçtan uca marka kimliği projesi. Marka analizi ve konumlandırma çalışmasından başlayarak logo tasarımı, renk paleti, tipografi sistemi ve kurumsal kimlik rehberini kapsayan bütünleşik bir süreç yürüttük.',
+    tags: ['Marka Konumlandırma','Logo Tasarımı','Kurumsal Kimlik','Renk Sistemi','Tipografi'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#1a1a2e"/><circle cx="600" cy="260" r="200" fill="none" stroke="#7F77DD" stroke-width="1.5" opacity="0.4"/><circle cx="600" cy="260" r="140" fill="#534AB7" opacity="0.2"/><circle cx="600" cy="260" r="80" fill="#534AB7" opacity="0.5"/><circle cx="600" cy="260" r="32" fill="#AFA9EC"/><text x="600" y="440" text-anchor="middle" fill="#AFA9EC" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.6">STELLA MARKA KİMLİĞİ PROJESİ</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#1a1a2e"/><circle cx="300" cy="180" r="100" fill="none" stroke="#7F77DD" stroke-width="1.5"/><circle cx="300" cy="180" r="65" fill="#534AB7" opacity="0.6"/><circle cx="300" cy="180" r="30" fill="#AFA9EC"/><text x="300" y="310" text-anchor="middle" fill="#AFA9EC" font-size="11" font-family="sans-serif" letter-spacing="3">LOGO · ANA GÖRSEL</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0d0d1a"/><rect x="40" y="40" width="240" height="320" rx="8" fill="#1a1a2e" stroke="#534AB7" stroke-width="0.5"/><rect x="60" y="70" width="80" height="80" rx="40" fill="#534AB7" opacity="0.7"/><rect x="60" y="170" width="180" height="8" rx="4" fill="#7F77DD" opacity="0.6"/><rect x="60" y="190" width="140" height="6" rx="3" fill="#534AB7" opacity="0.4"/><rect x="60" y="206" width="160" height="6" rx="3" fill="#534AB7" opacity="0.4"/><rect x="320" y="40" width="240" height="150" rx="8" fill="#7F77DD" opacity="0.15"/><rect x="320" y="210" width="240" height="150" rx="8" fill="#AFA9EC" opacity="0.1"/><text x="300" y="385" text-anchor="middle" fill="#534AB7" font-size="10" font-family="sans-serif" letter-spacing="2">KURUMSAL KİMLİK SETİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#534AB7"/><rect x="40" y="40" width="520" height="320" rx="12" fill="#fff" opacity="0.06"/><circle cx="100" cy="100" r="40" fill="#fff" opacity="0.15"/><circle cx="100" cy="100" r="24" fill="#fff" opacity="0.3"/><text x="160" y="96" fill="#fff" font-size="22" font-family="sans-serif" font-weight="700" opacity="0.9">STELLA</text><text x="160" y="116" fill="#AFA9EC" font-size="11" font-family="sans-serif" letter-spacing="4">COSMETICS</text><rect x="40" y="200" width="520" height="1" fill="#fff" opacity="0.1"/><text x="40" y="240" fill="#fff" font-size="11" font-family="sans-serif" opacity="0.5" letter-spacing="2">RENK PALETİ</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'forma'
+  },
+  forma: {
+    title: 'Forma Ajans',
+    cat: 'Grafik Tasarım',
+    year: '2024',
+    client: 'Forma Creative Studio',
+    services: 'Logo · Kurumsal Kimlik · Ambalaj Tasarımı',
+    desc: 'Forma Creative Studio için kapsamlı grafik tasarım projesi. Logo tasarımından kurumsal kimlik rehberine, ambalaj tasarımından dijital materyallere kadar tüm görsel iletişim sistemini oluşturduk.',
+    tags: ['Logo Tasarımı','Ambalaj','Broşür','Sosyal Medya Görselleri','Brand Guidelines'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#071a10"/><rect x="200" y="80" width="300" height="360" rx="12" fill="#1D9E75" opacity="0.12"/><rect x="230" y="110" width="240" height="300" rx="8" fill="#1D9E75" opacity="0.2"/><rect x="270" y="150" width="160" height="160" rx="8" fill="#5DCAA5" opacity="0.5"/><rect x="560" y="80" width="440" height="160" rx="12" fill="#0F6E56" opacity="0.8"/><rect x="560" y="260" width="440" height="90" rx="12" fill="#1D9E75" opacity="0.5"/><rect x="560" y="370" width="280" height="70" rx="12" fill="#5DCAA5" opacity="0.3"/><text x="600" y="480" text-anchor="middle" fill="#5DCAA5" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.6">FORMA AJANS · GRAFİK TASARIM</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#071a10"/><rect x="40" y="40" width="220" height="320" rx="10" fill="#1D9E75" opacity="0.15"/><rect x="60" y="60" width="180" height="280" rx="8" fill="#1D9E75" opacity="0.1"/><rect x="80" y="100" width="140" height="140" rx="6" fill="#5DCAA5" opacity="0.5"/><text x="150" y="295" text-anchor="middle" fill="#5DCAA5" font-size="10" font-family="sans-serif" letter-spacing="2">AMBALAJ TASARIMI</text><rect x="300" y="40" width="260" height="150" rx="10" fill="#0F6E56" opacity="0.8"/><rect x="300" y="210" width="260" height="150" rx="10" fill="#1D9E75" opacity="0.4"/><text x="430" y="395" text-anchor="middle" fill="#1D9E75" font-size="10" font-family="sans-serif" letter-spacing="2">KATALOG · BROŞÜR</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0a2a18"/><rect x="40" y="40" width="520" height="240" rx="10" fill="#1D9E75" opacity="0.08"/><rect x="60" y="60" width="120" height="120" rx="60" fill="#5DCAA5" opacity="0.3"/><text x="210" y="110" fill="#5DCAA5" font-size="28" font-family="sans-serif" font-weight="800" letter-spacing="-1">FORMA</text><text x="210" y="135" fill="#1D9E75" font-size="12" font-family="sans-serif" letter-spacing="4">CREATIVE STUDIO</text><rect x="60" y="200" width="300" height="2" fill="#1D9E75" opacity="0.3"/><text x="60" y="230" fill="#5DCAA5" font-size="11" font-family="sans-serif" opacity="0.6">LOGO SİSTEMİ · RENK UYGULAMALARI</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#1D9E75"/><rect x="40" y="40" width="520" height="320" rx="12" fill="#fff" opacity="0.08"/><text x="300" y="180" text-anchor="middle" fill="#fff" font-size="52" font-family="sans-serif" font-weight="900" opacity="0.9" letter-spacing="-2">F</text><text x="300" y="240" text-anchor="middle" fill="#fff" font-size="14" font-family="sans-serif" letter-spacing="6" opacity="0.6">FORMA</text><rect x="40" y="300" width="520" height="1" fill="#fff" opacity="0.15"/><text x="300" y="340" text-anchor="middle" fill="#fff" font-size="10" font-family="sans-serif" letter-spacing="3" opacity="0.4">BRAND IDENTITY SYSTEM 2024</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'nexus'
+  },
+  nexus: {
+    title: 'Nexus Digital',
+    cat: 'Sosyal Medya',
+    year: '2023',
+    client: 'Nexus Teknoloji A.Ş.',
+    services: 'Sosyal Medya Yönetimi · İçerik Üretimi · Meta Reklamları',
+    desc: '6 aylık sosyal medya yönetimi ve içerik üretimi projesi. Instagram, LinkedIn ve Twitter platformlarında düzenli içerik üretimi, topluluk yönetimi ve performans odaklı reklam kampanyaları yürüttük.',
+    tags: ['Instagram Yönetimi','LinkedIn','İçerik Takvimi','Meta Reklamları','Analitik Raporlama'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#07061a"/><rect x="100" y="60" width="120" height="240" rx="8" fill="#534AB7" opacity="0.3"/><rect x="100" y="100" width="120" height="200" rx="8" fill="#7F77DD" opacity="0.6"/><rect x="260" y="40" width="120" height="280" rx="8" fill="#534AB7" opacity="0.3"/><rect x="260" y="60" width="120" height="260" rx="8" fill="#AFA9EC" opacity="0.55"/><rect x="420" y="80" width="120" height="240" rx="8" fill="#534AB7" opacity="0.4"/><rect x="420" y="100" width="120" height="220" rx="8" fill="#7F77DD" opacity="0.5"/><rect x="580" y="50" width="120" height="270" rx="8" fill="#534AB7" opacity="0.35"/><rect x="580" y="70" width="120" height="250" rx="8" fill="#AFA9EC" opacity="0.6"/><rect x="740" y="70" width="120" height="250" rx="8" fill="#534AB7" opacity="0.28"/><rect x="740" y="90" width="120" height="230" rx="8" fill="#7F77DD" opacity="0.55"/><rect x="900" y="40" width="120" height="280" rx="8" fill="#534AB7" opacity="0.4"/><rect x="900" y="55" width="120" height="265" rx="8" fill="#AFA9EC" opacity="0.5"/><text x="600" y="460" text-anchor="middle" fill="#AFA9EC" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.5">NEXUS · SOSYAL MEDYA YÖNETİMİ</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#07061a"/><rect x="30" y="30" width="170" height="170" rx="10" fill="#534AB7" opacity="0.3"/><rect x="30" y="220" width="170" height="150" rx="10" fill="#7F77DD" opacity="0.4"/><rect x="220" y="30" width="170" height="100" rx="10" fill="#AFA9EC" opacity="0.25"/><rect x="220" y="145" width="170" height="225" rx="10" fill="#534AB7" opacity="0.5"/><rect x="405" y="30" width="165" height="340" rx="10" fill="#7F77DD" opacity="0.3"/><text x="300" y="390" text-anchor="middle" fill="#AFA9EC" font-size="10" font-family="sans-serif" letter-spacing="2">SOSYAL MEDYA İÇERİK GRİDİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0d0c22"/><rect x="40" y="40" width="520" height="280" rx="12" fill="#534AB7" opacity="0.08"/><text x="60" y="90" fill="#AFA9EC" font-size="13" font-family="sans-serif" letter-spacing="1" opacity="0.7">Erişim</text><rect x="60" y="110" width="0" height="12" rx="6" fill="#7F77DD" opacity="0.8" id="bar1"><animate attributeName="width" from="0" to="340" dur="1s" fill="freeze"/></rect><rect x="60" y="110" width="340" height="12" rx="6" fill="#7F77DD" opacity="0.8"/><text x="60" y="155" fill="#AFA9EC" font-size="13" font-family="sans-serif" letter-spacing="1" opacity="0.7">Etkileşim</text><rect x="60" y="175" width="240" height="12" rx="6" fill="#AFA9EC" opacity="0.6"/><text x="60" y="220" fill="#AFA9EC" font-size="13" font-family="sans-serif" letter-spacing="1" opacity="0.7">Dönüşüm</text><rect x="60" y="240" width="160" height="12" rx="6" fill="#534AB7" opacity="0.8"/><text x="300" y="360" text-anchor="middle" fill="#534AB7" font-size="10" font-family="sans-serif" letter-spacing="2">PERFORMANS ANALİTİĞİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#534AB7"/><rect x="40" y="40" width="240" height="320" rx="16" fill="#fff" opacity="0.08"/><rect x="60" y="60" width="200" height="200" rx="12" fill="#fff" opacity="0.12"/><rect x="60" y="278" width="140" height="10" rx="5" fill="#fff" opacity="0.4"/><rect x="60" y="298" width="100" height="8" rx="4" fill="#fff" opacity="0.2"/><rect x="320" y="40" width="240" height="148" rx="16" fill="#fff" opacity="0.08"/><rect x="320" y="210" width="240" height="150" rx="16" fill="#fff" opacity="0.08"/><text x="300" y="390" text-anchor="middle" fill="#fff" font-size="10" font-family="sans-serif" letter-spacing="3" opacity="0.5">INSTAGRAM İÇERİK ŞABLONLARI</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'reel'
+  },
+  reel: {
+    title: 'Reel Prodüksiyon',
+    cat: 'Video & Prodüksiyon',
+    year: '2024',
+    client: 'Çeşitli Markalar',
+    services: 'Reklam Filmi · Drone Çekim · Video Kurgu · Reels',
+    desc: 'Birden fazla marka için gerçekleştirilen video prodüksiyon projesi. Ürün tanıtım filmleri, sosyal medya reels içerikleri, drone çekimleri ve kurumsal tanıtım videoları ürettik. Profesyonel ekipman ve deneyimli ekibimizle yüksek kaliteli görsel hikayeler anlattık.',
+    tags: ['Reklam Filmi','Drone Çekim','Video Kurgu','Instagram Reels','Tanıtım Videosu'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#060f06"/><polygon points="300,400 600,100 900,400" fill="none" stroke="#639922" stroke-width="1.5" opacity="0.3"/><polygon points="380,400 600,175 820,400" fill="#1a3a10" opacity="0.3"/><circle cx="600" cy="220" r="60" fill="#3B6D11" opacity="0.7"/><circle cx="600" cy="220" r="36" fill="#639922" opacity="0.9"/><rect x="583" y="202" width="34" height="5" rx="2" fill="#fff"/><rect x="583" y="214" width="34" height="5" rx="2" fill="#fff"/><rect x="597" y="219" width="14" height="22" fill="#fff"/><text x="600" y="460" text-anchor="middle" fill="#97C459" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.6">VİDEO &amp; PRODÜKSIYON PROJESİ</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0a1a0a"/><rect x="40" y="40" width="520" height="280" rx="10" fill="#060f06"/><polygon points="280,130 280,250 380,190" fill="#639922" opacity="0.8"/><rect x="40" y="330" width="80" height="50" rx="6" fill="#1D6311" opacity="0.6"/><rect x="130" y="330" width="80" height="50" rx="6" fill="#639922" opacity="0.4"/><rect x="220" y="330" width="80" height="50" rx="6" fill="#1D6311" opacity="0.5"/><text x="300" y="395" text-anchor="middle" fill="#639922" font-size="10" font-family="sans-serif" letter-spacing="2">REKLAM FİLMİ · KURGU AŞAMASI</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#060f06"/><path d="M100 350 Q200 150 300 200 Q400 250 500 100" fill="none" stroke="#639922" stroke-width="2" opacity="0.6"/><circle cx="100" cy="350" r="6" fill="#639922"/><circle cx="300" cy="200" r="6" fill="#97C459"/><circle cx="500" cy="100" r="6" fill="#639922"/><text x="300" y="385" text-anchor="middle" fill="#639922" font-size="10" font-family="sans-serif" letter-spacing="2">DRONE ÇEKİM ROTASI</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0d1f0d"/><rect x="160" y="40" width="280" height="500" rx="20" fill="#639922" opacity="0.08"/><rect x="180" y="60" width="240" height="360" rx="14" fill="#060f06"/><polygon points="270,180 270,280 350,230" fill="#639922" opacity="0.8"/><rect x="180" y="430" width="240" height="30" rx="8" fill="#639922" opacity="0.2"/><text x="300" y="395" text-anchor="middle" fill="#97C459" font-size="10" font-family="sans-serif" letter-spacing="2">INSTAGRAM REELS FORMAT</text></svg>` },
+    ],
+    hasVideo: true,
+    videoLabel: 'Reklam Filmi · 00:30',
+    next: 'lux'
+  },
+  lux: {
+    title: 'Lux Moda Çekim',
+    cat: 'Fotoğraf Çekim',
+    year: '2024',
+    client: 'Lux Fashion House',
+    services: 'Modelli Çekim · Ürün Fotoğrafı · E-Ticaret Görselleri',
+    desc: 'Lux Fashion House için sezonluk moda çekimi ve e-ticaret görselleri projesi. Stüdyo ve dış mekan çekimlerini kapsayan bu projede, marka kimliğiyle uyumlu yüksek kaliteli fotoğraflar ürettik.',
+    tags: ['Modelli Çekim','Ürün Fotoğrafı','E-Ticaret','Stüdyo Çekim','Dış Mekan'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#130c04"/><rect x="150" y="60" width="300" height="400" rx="12" fill="#854F0B" opacity="0.2"/><rect x="180" y="90" width="240" height="340" rx="8" fill="#BA7517" opacity="0.15"/><circle cx="300" cy="240" r="100" fill="#EF9F27" opacity="0.3"/><circle cx="300" cy="240" r="60" fill="#FAC775" opacity="0.5"/><circle cx="300" cy="240" r="24" fill="#fff" opacity="0.7"/><circle cx="300" cy="240" r="8" fill="#854F0B"/><rect x="540" y="60" width="300" height="190" rx="12" fill="#BA7517" opacity="0.25"/><rect x="540" y="270" width="300" height="190" rx="12" fill="#EF9F27" opacity="0.15"/><rect x="870" y="60" width="180" height="400" rx="12" fill="#854F0B" opacity="0.2"/><text x="600" y="490" text-anchor="middle" fill="#FAC775" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.5">LUX FASHION · FOTOĞRAF ÇEKİM</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#130c04"/><rect x="40" y="20" width="220" height="360" rx="10" fill="#1a1008"/><circle cx="150" cy="150" r="80" fill="#EF9F27" opacity="0.25"/><circle cx="150" cy="150" r="48" fill="#FAC775" opacity="0.4"/><circle cx="150" cy="150" r="20" fill="#fff" opacity="0.6"/><rect x="280" y="20" width="280" height="172" rx="10" fill="#BA7517" opacity="0.2"/><rect x="280" y="208" width="280" height="172" rx="10" fill="#EF9F27" opacity="0.12"/><text x="300" y="390" text-anchor="middle" fill="#FAC775" font-size="10" font-family="sans-serif" letter-spacing="2">STÜDYO ÇEKİM SETİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0d0804"/><rect x="40" y="40" width="160" height="210" rx="8" fill="#BA7517" opacity="0.25"/><rect x="220" y="40" width="160" height="210" rx="8" fill="#EF9F27" opacity="0.2"/><rect x="400" y="40" width="160" height="210" rx="8" fill="#854F0B" opacity="0.3"/><rect x="40" y="270" width="160" height="90" rx="6" fill="#EF9F27" opacity="0.15"/><rect x="220" y="270" width="160" height="90" rx="6" fill="#BA7517" opacity="0.2"/><rect x="400" y="270" width="160" height="90" rx="6" fill="#FAC775" opacity="0.12"/><text x="300" y="390" text-anchor="middle" fill="#BA7517" font-size="10" font-family="sans-serif" letter-spacing="2">E-TİCARET ÜRÜN GÖRSELLERİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#EF9F27"/><rect x="40" y="40" width="520" height="320" rx="12" fill="#854F0B" opacity="0.15"/><circle cx="300" cy="180" r="80" fill="#854F0B" opacity="0.2"/><circle cx="300" cy="180" r="50" fill="#854F0B" opacity="0.3"/><text x="300" y="186" text-anchor="middle" fill="#fff" font-size="18" font-family="sans-serif" font-weight="700" opacity="0.9">LUX</text><text x="300" y="340" text-anchor="middle" fill="#854F0B" font-size="10" font-family="sans-serif" letter-spacing="4" opacity="0.7">LOOKBOOK 2024</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'apex'
+  },
+  apex: {
+    title: 'Apex SEO Kampanya',
+    cat: 'SEO & SEM',
+    year: '2023',
+    client: 'Apex Teknoloji',
+    services: 'SEO Danışmanlığı · Google Ads · Dönüşüm Optimizasyonu',
+    desc: '12 aylık SEO ve Google Ads yönetimi projesi. Organik trafiği %180 artıran teknik SEO çalışmaları, içerik stratejisi ve performans odaklı Google Ads kampanyaları ile Apex Teknoloji\'nin dijital görünürlüğünü önemli ölçüde güçlendirdik.',
+    tags: ['Teknik SEO','Google Ads','Keyword Araştırması','Landing Page Optimizasyonu','Raporlama'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#04101e"/><rect x="80" y="120" width="120" height="280" rx="8" fill="#185FA5" opacity="0.3"/><rect x="80" y="170" width="120" height="230" rx="8" fill="#378ADD" opacity="0.6"/><rect x="240" y="80" width="120" height="320" rx="8" fill="#185FA5" opacity="0.3"/><rect x="240" y="110" width="120" height="290" rx="8" fill="#85B7EB" opacity="0.65"/><rect x="400" y="40" width="120" height="360" rx="8" fill="#185FA5" opacity="0.4"/><rect x="400" y="60" width="120" height="340" rx="8" fill="#378ADD" opacity="0.55"/><rect x="560" y="100" width="120" height="300" rx="8" fill="#185FA5" opacity="0.3"/><rect x="560" y="130" width="120" height="270" rx="8" fill="#85B7EB" opacity="0.6"/><rect x="720" y="60" width="120" height="340" rx="8" fill="#185FA5" opacity="0.5"/><rect x="720" y="80" width="120" height="320" rx="8" fill="#378ADD" opacity="0.6"/><rect x="880" y="90" width="120" height="310" rx="8" fill="#185FA5" opacity="0.35"/><rect x="880" y="115" width="120" height="285" rx="8" fill="#85B7EB" opacity="0.55"/><line x1="60" y1="410" x2="1140" y2="410" stroke="#378ADD" stroke-width="0.8" opacity="0.25"/><text x="600" y="470" text-anchor="middle" fill="#85B7EB" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.5">APEX · SEO &amp; GOOGLE ADS KAMPANYASI</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#04101e"/><rect x="40" y="40" width="520" height="280" rx="10" fill="#0a1a2e"/><text x="60" y="90" fill="#85B7EB" font-size="12" font-family="sans-serif" opacity="0.7">Organik Trafik</text><rect x="60" y="108" width="420" height="10" rx="5" fill="#378ADD" opacity="0.7"/><text x="60" y="148" fill="#85B7EB" font-size="12" font-family="sans-serif" opacity="0.7">Keyword Sıralamaları</text><rect x="60" y="166" width="300" height="10" rx="5" fill="#85B7EB" opacity="0.6"/><text x="60" y="206" fill="#85B7EB" font-size="12" font-family="sans-serif" opacity="0.7">Dönüşüm Oranı</text><rect x="60" y="224" width="200" height="10" rx="5" fill="#378ADD" opacity="0.5"/><text x="60" y="264" fill="#85B7EB" font-size="12" font-family="sans-serif" opacity="0.7">Google Ads ROAS</text><rect x="60" y="282" width="380" height="10" rx="5" fill="#85B7EB" opacity="0.7"/><text x="300" y="370" text-anchor="middle" fill="#378ADD" font-size="10" font-family="sans-serif" letter-spacing="2">PERFORMANS RAPORU · Q4 2023</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#04101e"/><path d="M60 340 L120 280 L200 300 L280 200 L360 220 L440 140 L540 80" fill="none" stroke="#378ADD" stroke-width="2" opacity="0.8"/><path d="M60 340 L120 310 L200 330 L280 270 L360 280 L440 220 L540 180" fill="none" stroke="#85B7EB" stroke-width="1.5" opacity="0.5"/><circle cx="540" cy="80" r="6" fill="#378ADD"/><circle cx="540" cy="180" r="6" fill="#85B7EB"/><text x="300" y="385" text-anchor="middle" fill="#378ADD" font-size="10" font-family="sans-serif" letter-spacing="2">ORGANİK TRAFİK BÜYÜME GRAFİĞİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#378ADD"/><rect x="40" y="40" width="520" height="320" rx="12" fill="#fff" opacity="0.07"/><text x="300" y="140" text-anchor="middle" fill="#fff" font-size="52" font-family="sans-serif" font-weight="900" opacity="0.9">+180%</text><text x="300" y="180" text-anchor="middle" fill="#fff" font-size="14" font-family="sans-serif" letter-spacing="2" opacity="0.7">ORGANİK TRAFİK ARTIŞI</text><rect x="100" y="220" width="400" height="1" fill="#fff" opacity="0.15"/><text x="300" y="260" text-anchor="middle" fill="#fff" font-size="11" font-family="sans-serif" opacity="0.5">12 Aylık SEO Çalışması Sonucu</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'vivo'
+  },
+  vivo: {
+    title: 'Vivo Dijital',
+    cat: 'Dijital Pazarlama',
+    year: '2024',
+    client: 'Vivo E-Ticaret',
+    services: 'Dijital Strateji · Meta Reklamları · İçerik Pazarlaması',
+    desc: 'Vivo E-Ticaret platformu için kapsamlı dijital pazarlama stratejisi ve uygulama projesi. Meta reklam yönetimi, içerik pazarlaması ve email kampanyaları ile satışları önemli ölçüde artırdık.',
+    tags: ['Meta Reklamları','E-posta Kampanyaları','İçerik Stratejisi','Retargeting','A/B Testi'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#160820"/><ellipse cx="300" cy="260" rx="220" ry="200" fill="#D4537E" opacity="0.1"/><ellipse cx="600" cy="260" rx="220" ry="200" fill="#993556" opacity="0.1"/><ellipse cx="900" cy="260" rx="220" ry="200" fill="#ED93B1" opacity="0.1"/><ellipse cx="300" cy="260" rx="140" ry="130" fill="#D4537E" opacity="0.3"/><ellipse cx="600" cy="260" rx="140" ry="130" fill="#993556" opacity="0.3"/><ellipse cx="900" cy="260" rx="140" ry="130" fill="#ED93B1" opacity="0.25"/><text x="600" y="480" text-anchor="middle" fill="#ED93B1" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.5">VİVO · DİJİTAL PAZARLAMA STRATEJİSİ</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#160820"/><ellipse cx="200" cy="180" rx="140" ry="130" fill="#D4537E" opacity="0.12"/><ellipse cx="350" cy="180" rx="140" ry="130" fill="#993556" opacity="0.12"/><ellipse cx="200" cy="180" rx="85" ry="80" fill="#D4537E" opacity="0.35"/><ellipse cx="350" cy="180" rx="85" ry="80" fill="#993556" opacity="0.35"/><text x="300" y="330" text-anchor="middle" fill="#ED93B1" font-size="10" font-family="sans-serif" letter-spacing="2">HEDEF KİTLE ANALİZİ</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#0f0418"/><rect x="40" y="40" width="520" height="280" rx="10" fill="#1a0a28"/><text x="60" y="88" fill="#ED93B1" font-size="12" font-family="sans-serif" opacity="0.7">Kampanya A – Awareness</text><rect x="60" y="104" width="360" height="10" rx="5" fill="#D4537E" opacity="0.7"/><text x="60" y="144" fill="#ED93B1" font-size="12" font-family="sans-serif" opacity="0.7">Kampanya B – Consideration</text><rect x="60" y="160" width="240" height="10" rx="5" fill="#993556" opacity="0.6"/><text x="60" y="200" fill="#ED93B1" font-size="12" font-family="sans-serif" opacity="0.7">Kampanya C – Conversion</text><rect x="60" y="216" width="420" height="10" rx="5" fill="#ED93B1" opacity="0.5"/><text x="300" y="370" text-anchor="middle" fill="#D4537E" font-size="10" font-family="sans-serif" letter-spacing="2">META REKLAM PERFORMANSI</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#D4537E"/><rect x="40" y="40" width="520" height="320" rx="12" fill="#fff" opacity="0.07"/><text x="300" y="160" text-anchor="middle" fill="#fff" font-size="44" font-family="sans-serif" font-weight="900" opacity="0.9">3.2x</text><text x="300" y="200" text-anchor="middle" fill="#fff" font-size="14" font-family="sans-serif" letter-spacing="2" opacity="0.7">ROAS ARTIŞI</text><rect x="100" y="240" width="400" height="1" fill="#fff" opacity="0.15"/><text x="300" y="280" text-anchor="middle" fill="#fff" font-size="11" font-family="sans-serif" opacity="0.5">90 Günlük Meta Reklam Optimizasyonu</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'stella'
+  },
+  orion: {
+    title: 'Orion E-Ticaret',
+    cat: 'Web Tasarım',
+    year: '2024',
+    client: 'Orion Elektronik',
+    services: 'E-Ticaret Web Sitesi · SEO Uyumlu Tasarım · Mobil Web',
+    desc: 'Orion Elektronik için uçtan uca e-ticaret web sitesi projesi. UX/UI tasarımından geliştirmeye, SEO optimizasyonundan mobil uyumluluk testlerine kadar tüm süreci yönettik.',
+    tags: ['UX/UI Tasarım','E-Ticaret','SEO Uyumlu','Responsive','Mobil Öncelikli'],
+    cover: `<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="520" fill="#080d12"/><rect x="100" y="60" width="1000" height="400" rx="16" fill="#111820" stroke="#1e2730" stroke-width="1"/><rect x="120" y="80" width="960" height="28" rx="6" fill="#1a2230"/><circle cx="142" cy="94" r="7" fill="#ff5f57"/><circle cx="162" cy="94" r="7" fill="#febc2e"/><circle cx="182" cy="94" r="7" fill="#28c840"/><rect x="120" y="120" width="220" height="320" rx="8" fill="#0d1520"/><rect x="140" y="140" width="180" height="8" rx="4" fill="#378ADD" opacity="0.5"/><rect x="140" y="158" width="140" height="6" rx="3" fill="#1e2730"/><rect x="140" y="172" width="160" height="6" rx="3" fill="#1e2730"/><rect x="140" y="186" width="120" height="6" rx="3" fill="#378ADD" opacity="0.3"/><rect x="360" y="120" width="720" height="320" rx="8" fill="#0d1520"/><rect x="380" y="140" width="680" height="180" rx="6" fill="#1a2230"/><rect x="380" y="332" width="200" height="90" rx="6" fill="#1e2730"/><rect x="594" y="332" width="200" height="90" rx="6" fill="#1e2730"/><rect x="808" y="332" width="200" height="90" rx="6" fill="#1e2730"/><text x="600" y="490" text-anchor="middle" fill="#85B7EB" font-size="13" font-family="sans-serif" letter-spacing="4" opacity="0.5">ORİON · E-TİCARET WEB SİTESİ</text></svg>`,
+    gallery: [
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#080d12"/><rect x="20" y="20" width="560" height="340" rx="10" fill="#111820" stroke="#1e2730" stroke-width="1"/><rect x="35" y="35" width="530" height="20" rx="4" fill="#1a2230"/><rect x="35" y="65" width="160" height="270" rx="6" fill="#0d1520"/><rect x="50" y="80" width="130" height="7" rx="3" fill="#378ADD" opacity="0.5"/><rect x="50" y="95" width="110" height="5" rx="2" fill="#1e2730"/><rect x="50" y="108" width="120" height="5" rx="2" fill="#1e2730"/><rect x="210" y="65" width="365" height="270" rx="6" fill="#0d1520"/><rect x="225" y="80" width="335" height="140" rx="5" fill="#1a2230"/><rect x="225" y="232" width="100" height="90" rx="5" fill="#1e2730"/><rect x="340" y="232" width="100" height="90" rx="5" fill="#1e2730"/><rect x="455" y="232" width="100" height="90" rx="5" fill="#1e2730"/><text x="300" y="388" text-anchor="middle" fill="#378ADD" font-size="10" font-family="sans-serif" letter-spacing="2">DESKTOP TASARIM · ANA SAYFA</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#04101e"/><rect x="200" y="10" width="200" height="380" rx="16" fill="#111820" stroke="#1e2730" stroke-width="1"/><rect x="215" y="30" width="170" height="14" rx="4" fill="#1a2230"/><rect x="215" y="52" width="170" height="90" rx="6" fill="#0d1520"/><rect x="215" y="152" width="82" height="80" rx="5" fill="#0d1520"/><rect x="305" y="152" width="80" height="80" rx="5" fill="#0d1520"/><rect x="215" y="242" width="82" height="80" rx="5" fill="#0d1520"/><rect x="305" y="242" width="80" height="80" rx="5" fill="#0d1520"/><rect x="215" y="335" width="170" height="24" rx="5" fill="#378ADD"/><text x="300" y="390" text-anchor="middle" fill="#85B7EB" font-size="10" font-family="sans-serif" letter-spacing="2">MOBİL WEB TASARIMI</text></svg>` },
+      { type:'svg', src:`<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="400" fill="#378ADD"/><rect x="40" y="40" width="520" height="320" rx="12" fill="#fff" opacity="0.07"/><text x="300" y="155" text-anchor="middle" fill="#fff" font-size="44" font-family="sans-serif" font-weight="900" opacity="0.9">+65%</text><text x="300" y="195" text-anchor="middle" fill="#fff" font-size="14" font-family="sans-serif" letter-spacing="2" opacity="0.7">DÖNÜŞÜM ORANI ARTIŞI</text><rect x="100" y="235" width="400" height="1" fill="#fff" opacity="0.15"/><text x="300" y="275" text-anchor="middle" fill="#fff" font-size="11" font-family="sans-serif" opacity="0.5">UX Optimizasyonu Sonrası · 3 Ay</text></svg>` },
+    ],
+    hasVideo: false,
+    next: 'stella'
+  }
+};
+
+// Proje listesi (sıralı — "sonraki proje" için)
+const PROJECT_ORDER = ['stella','forma','nexus','orion','reel','lux','apex','vivo'];
+
+// ════════════════════════════════════════
+// NAVİGASYON
+// ════════════════════════════════════════
+let prevPage = 'works';
+
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links li').forEach(l => l.classList.remove('active'));
+  const pg = document.getElementById('page-' + page);
+  const nav = document.getElementById('nav-' + page);
+  if (pg) pg.classList.add('active');
+  if (nav) nav.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+// ════════════════════════════════════════
+// PROJE DETAY AÇICI
+// ════════════════════════════════════════
+function openProject(id, fromPage) {
+  const p = PROJECTS[id];
+  if (!p) return;
+
+  prevPage = fromPage || 'works';
+
+  // Meta
+  document.getElementById('proj-cat').textContent = p.cat;
+  document.getElementById('proj-year').textContent = p.year;
+  document.getElementById('proj-year2').textContent = p.year;
+  document.getElementById('proj-title').textContent = p.title;
+  document.getElementById('proj-desc').textContent = p.desc;
+  document.getElementById('proj-client').textContent = p.client;
+  document.getElementById('proj-services').textContent = p.services;
+
+  // Etiketler
+  const tagsEl = document.getElementById('proj-tags');
+  tagsEl.innerHTML = p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('');
+
+  // Kapak görseli
+  // GERÇEK FOTOĞRAF İÇİN: p.cover alanını şu şekilde değiştirin:
+  // cover: '<img src="projeler/stella/kapak.jpg" alt="Stella Marka">'
+  document.getElementById('proj-cover').innerHTML = p.cover;
+
+  // Galeri
+  const grid = document.getElementById('proj-gallery-grid');
+  grid.innerHTML = p.gallery.map(item => {
+    if (item.type === 'svg') {
+      return `<div class="pg-item">${item.src}</div>`;
+    } else {
+      // GERÇEK FOTOĞRAF: { type:'img', src:'projeler/stella/1.jpg', alt:'...' }
+      return `<div class="pg-item"><img src="${item.src}" alt="${item.alt||''}" style="width:100%;height:100%;object-fit:cover;display:block;"></div>`;
+    }
+  }).join('');
+
+  // Video
+  const videoEl = document.getElementById('proj-video');
+  if (p.hasVideo) {
+    videoEl.style.display = 'flex';
+    document.getElementById('proj-video-label').textContent = p.videoLabel || 'Tanıtım Videosu';
+    // GERÇEK VİDEO İÇİN video elementini buraya ekleyebilirsiniz
+  } else {
+    videoEl.style.display = 'none';
+  }
+
+  // Sonraki proje
+  const nextId = p.next || PROJECT_ORDER[(PROJECT_ORDER.indexOf(id) + 1) % PROJECT_ORDER.length];
+  const nextP = PROJECTS[nextId];
+  if (nextP) {
+    document.getElementById('proj-next-title').textContent = nextP.title;
+    document.getElementById('proj-next-thumb').innerHTML = nextP.cover;
+    document.getElementById('proj-next-btn').onclick = () => openProject(nextId);
+  }
+
+  // Geri butonu
+  document.getElementById('proj-back-btn').onclick = () => go(prevPage);
+
+  go('project');
+}
+</script>
+</body>
+</html>
