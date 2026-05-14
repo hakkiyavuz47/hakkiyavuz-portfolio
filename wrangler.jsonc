@@ -5,7 +5,7 @@
 
   "assets": {
     "directory": "./static",
-    "not_found_handling": "404"
+    "not_found_handling": "none"
   },
 
   "observability": {
