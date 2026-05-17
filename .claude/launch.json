@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "Static Site",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "static", "-p", "3000", "-n"],
+      "port": 3000
+    },
+    {
       "name": "Vite Dev Server",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
