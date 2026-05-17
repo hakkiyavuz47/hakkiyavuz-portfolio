@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Endüstriyel — Portfolyo | Hakkı Yavuz</title>
-<meta name="description" content="Fabrika, atölye ve saha ortamlarını, endüstriyel estetiği ön plana çıkaran güçlü karelerle belgeleyin.">
-<link rel="canonical" href="https://hakkiyavuz.com.tr/portfolyo/endustriyel/">
+<title>Tanıtım & Kurumsal — Portfolyo | Hakkı Yavuz</title>
+<meta name="description" content="Markanızı, mekanınızı ve ürününüzü sinematik bir dille anlatan kurumsal tanıtım filmleri.">
+<link rel="canonical" href="https://hakkiyavuz.com.tr/portfolyo/tanitim/">
 <link rel="icon" type="image/png" href="/logo.png">
 <link rel="apple-touch-icon" href="/logo.png">
 <link rel="stylesheet" href="/styles.css">
@@ -37,25 +37,29 @@
 
 <div class="port-hero">
   <a href="/portfolyo/" class="port-back">← Portfolyoya Dön</a>
-  <div class="port-cat-badge konsept">KONSEPT</div>
-  <h1 class="port-title">Endüstriyel</h1>
-  <p class="port-desc">Fabrika, atölye ve saha ortamlarını, endüstriyel estetiği ön plana çıkaran güçlü karelerle belgeleyin.</p>
+  <div class="port-cat-badge konsept">VİDEO</div>
+  <h1 class="port-title">Tanıtım & Kurumsal</h1>
+  <p class="port-desc">Markanızı, mekanınızı ve ürününüzü sinematik bir dille anlatan kurumsal tanıtım filmleri.</p>
 </div>
 
-<div class="port-masonry">
-  <div class="port-item reveal">
-    <img src="/images/endustriyel/ER8A8940-1.jpg" alt="Endüstriyel" loading="lazy">
-  </div>
-  <div class="port-item reveal">
-    <img src="/images/endustriyel/Sanayi_urunleri.jpg" alt="Endüstriyel" loading="lazy">
-  </div>
+<div class="port-videos">
+  <a href="https://youtu.be/nO6or6byqC0" target="_blank" class="yt-card reveal" data-yt-id="nO6or6byqC0">
+    <img src="https://img.youtube.com/vi/nO6or6byqC0/maxresdefault.jpg" alt="Snowpark Tanıtım" loading="lazy">
+    <div class="yt-play">
+      <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="68" height="48" rx="10" fill="#FF0000"/>
+        <polygon points="26,14 26,34 46,24" fill="white"/>
+      </svg>
+    </div>
+    <div class="yt-label"><div class="yt-label-title">Snowpark Tanıtım</div></div>
+  </a>
 </div>
 
 <div class="cta-block">
   <h2>Bir Projeniz<br><b>Var Mı?</b></h2>
   <div class="btns">
     <a class="btn btn-outline" href="/portfolyo/">Portfolyoyu İncele →</a>
-    <a class="btn btn-wa" href="https://wa.me/905434370495?text=Merhaba,%20proje%20g%C3%B6r%C3%BC%C5%9Fmesi%20yapmak%20istiyorum." target="_blank"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> WhatsApp'tan Yaz</a>
+    <a class="btn btn-wa" href="https://wa.me/905434370495?text=Merhaba,%20proje%20g%C3%B6r%C3%BC%C5%9Fmesi%20yapmak%20istiyorum." target="_blank"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> Projeni Konuşalım</a>
   </div>
 </div>
 <footer>
@@ -73,6 +77,20 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); revealObserver.unobserve(e.target); } });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// YouTube başlıklarını otomatik çek
+document.querySelectorAll('.yt-card[data-yt-id]').forEach(card => {
+  const id = card.dataset.ytId;
+  const titleEl = card.querySelector('.yt-label-title');
+  const imgEl = card.querySelector('img');
+  fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.title) titleEl.textContent = data.title;
+      if (data.thumbnail_url) imgEl.src = data.thumbnail_url;
+    })
+    .catch(() => {});
+});
 
 function toggleMenu() {
   const m = document.getElementById('mobile-menu');

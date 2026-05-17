@@ -48,10 +48,6 @@
     <span class="port-badge">Konsept</span>
   </div>
   <div class="port-item konsept reveal">
-    <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&h=1300&q=80" alt="Fuar Konsept" loading="lazy">
-    <span class="port-badge">Konsept</span>
-  </div>
-  <div class="port-item konsept reveal">
     <img src="https://images.unsplash.com/photo-1559223607-a43c990c692c?auto=format&fit=crop&w=1000&h=1000&q=80" alt="Fuar Konsept" loading="lazy">
     <span class="port-badge">Konsept</span>
   </div>
@@ -68,13 +64,32 @@
     <span class="port-badge">Konsept</span>
   </div>
   <div class="port-item konsept reveal">
-    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&h=1050&q=80" alt="Fuar Konsept" loading="lazy">
-    <span class="port-badge">Konsept</span>
-  </div>
-  <div class="port-item konsept reveal">
     <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1600&h=1000&q=80" alt="Fuar Konsept" loading="lazy">
     <span class="port-badge">Konsept</span>
   </div>
+</div>
+
+<div class="port-videos">
+  <a href="https://youtu.be/RcXS_K_Ge7A" target="_blank" class="yt-card reveal" data-yt-id="RcXS_K_Ge7A">
+    <img src="https://img.youtube.com/vi/RcXS_K_Ge7A/maxresdefault.jpg" alt="Fuar Video" loading="lazy">
+    <div class="yt-play">
+      <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="68" height="48" rx="10" fill="#FF0000"/>
+        <polygon points="26,14 26,34 46,24" fill="white"/>
+      </svg>
+    </div>
+    <div class="yt-label"><div class="yt-label-title">PlastEurasıa 24</div></div>
+  </a>
+  <a href="https://youtu.be/qtVPo6TJMRY" target="_blank" class="yt-card reveal" data-yt-id="qtVPo6TJMRY">
+    <img src="https://img.youtube.com/vi/qtVPo6TJMRY/maxresdefault.jpg" alt="Fuar Video" loading="lazy">
+    <div class="yt-play">
+      <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="68" height="48" rx="10" fill="#FF0000"/>
+        <polygon points="26,14 26,34 46,24" fill="white"/>
+      </svg>
+    </div>
+    <div class="yt-label"><div class="yt-label-title">McDodo Teaser</div></div>
+  </a>
 </div>
 
 <div class="cta-block">
@@ -99,6 +114,20 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); revealObserver.unobserve(e.target); } });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// YouTube başlıklarını otomatik çek
+document.querySelectorAll('.yt-card[data-yt-id]').forEach(card => {
+  const id = card.dataset.ytId;
+  const titleEl = card.querySelector('.yt-label-title');
+  const imgEl = card.querySelector('img');
+  fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.title) titleEl.textContent = data.title;
+      if (data.thumbnail_url) imgEl.src = data.thumbnail_url;
+    })
+    .catch(() => {});
+});
 
 function toggleMenu() {
   const m = document.getElementById('mobile-menu');
