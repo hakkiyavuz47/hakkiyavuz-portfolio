@@ -72,6 +72,19 @@
   </div>
 </div>
 
+<div class="port-videos">
+  <a href="https://youtube.com/shorts/OUmwkGUWiow" target="_blank" class="yt-card reveal" data-yt-id="OUmwkGUWiow">
+    <img src="https://img.youtube.com/vi/OUmwkGUWiow/maxresdefault.jpg" alt="Medikal Video" loading="lazy">
+    <div class="yt-play">
+      <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="68" height="48" rx="10" fill="#FF0000"/>
+        <polygon points="26,14 26,34 46,24" fill="white"/>
+      </svg>
+    </div>
+    <div class="yt-label"><div class="yt-label-title">Medikal Video</div></div>
+  </a>
+</div>
+
 <div class="cta-block">
   <h2>Bir Projeniz<br><b>Var Mı?</b></h2>
   <div class="btns">
@@ -94,6 +107,20 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); revealObserver.unobserve(e.target); } });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// YouTube başlıklarını otomatik çek
+document.querySelectorAll('.yt-card[data-yt-id]').forEach(card => {
+  const id = card.dataset.ytId;
+  const titleEl = card.querySelector('.yt-label-title');
+  const imgEl = card.querySelector('img');
+  fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.title) titleEl.textContent = data.title;
+      if (data.thumbnail_url) imgEl.src = data.thumbnail_url;
+    })
+    .catch(() => {});
+});
 
 function toggleMenu() {
   const m = document.getElementById('mobile-menu');
